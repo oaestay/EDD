@@ -66,7 +66,7 @@ void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
         if(hp->size) {
             hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(pixel)) ;
         } else {
-            hp->elem = malloc(sizeof(pixel)) ;
+            hp->elem = malloc(sizeof(pixel)*pixeles->size) ;
         }
         pixel nd ;
         findeado = list_get(pixeles,i);
