@@ -6,8 +6,7 @@ int main( int argc, char* argv[] )
     BMP*    bmp;
     UCHAR  r, g, b;
     UINT    width, height;
-    UINT    x, y,
-
+    UINT    x, y;
     int z;
 
 
