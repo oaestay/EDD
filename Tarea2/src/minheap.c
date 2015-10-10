@@ -69,7 +69,7 @@ void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
             hp->elem = malloc(sizeof(pixel)) ;
         }
         pixel nd ;
-        findeado = list_get(pixeles,i)
+        findeado = list_get(pixeles,i);
         nd.repetitions = findeado->repetitions;
         nd.r = findeado->r;
         nd.g = findeado->g;
@@ -103,19 +103,18 @@ void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
     // Making sure that heap property is also satisfied
     //for(i = (hp->size - 1) / 2; i >= 0; i--) {
       //  heapify(hp, i) ;
-    }
-}
+
 
 
 /*
     Function to insert a node into the min heap, by allocating space for that node in the
     heap and also making sure that the heap property and shape propety are never violated.
 */
-void insertNode(minHeap *hp, Element data) {
+void insertNode(minHeap *hp, Element *data) {
     if(hp->size) {
         hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(pixel)) ;
     } else {
-        hp->elem = malloc(sizeof(node)) ;
+        hp->elem = malloc(sizeof(pixel)) ;
     }
 
     pixel nd ;
@@ -142,9 +141,9 @@ void insertNode(minHeap *hp, Element data) {
 void deleteNode(minHeap *hp,pixel *min) {
     if(hp->size) {
         printf("Deleting node %d\n\n", hp->elem[0].repetitions) ;
-        *pixel = *hp->elem[0];
+        *min = *hp->elem[0];
         hp->elem[0] = hp->elem[--(hp->size)] ;
-        hp->elem = realloc(hp->elem, hp->size * sizeof(node)) ;
+        hp->elem = realloc(hp->elem, hp->size * sizeof(pixel)) ;
         heapify(hp, 0) ;
     } else {
         printf("\nMin Heap is empty!\n") ;
@@ -193,8 +192,3 @@ void inorderTraversal(minHeap *hp, int i) {
 /*
     Function to display all the nodes in the min heap by doing a post order traversal
 */
-
-
-
-
-}
