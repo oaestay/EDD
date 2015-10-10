@@ -26,7 +26,7 @@ int main( int argc, char* argv[] )
             /* Get pixel's RGB values */
             BMP_GetPixelRGB( bmp, x, y, &r, &g, &b );
 
-            fprintf("r:%i, g:%i, b:%i \n",r,g,b);
+            printf("r:%i, g:%i, b:%i \n",r,g,b);
 
             /* Invert RGB values */
 
