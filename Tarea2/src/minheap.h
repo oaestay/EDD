@@ -71,8 +71,6 @@ void buildMinHeap(minHeap *hp, LinkedList *pixeles) ;
     // Making sure that heap property is also satisfied
     //for(i = (hp->size - 1) / 2; i >= 0; i--) {
       //  heapify(hp, i) ;
-    }
-}
 
 
 /*
@@ -113,8 +111,3 @@ void deleteMinHeap(minHeap *hp) ;
 /*
     Function to display all the nodes in the min heap by doing a post order traversal
 */
-
-
-
-
-}
