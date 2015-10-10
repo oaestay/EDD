@@ -48,6 +48,7 @@ int main(int argc, char const *argv[]) {
 
     BMP_Free(bmp);
     list_destroy(list);
+    deleteMinHeap(heap);
 
     return 0;
 }

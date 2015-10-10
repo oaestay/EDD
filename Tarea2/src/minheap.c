@@ -176,7 +176,8 @@ void inorderTraversal(minHeap *hp, int i) {
     if(LCHILD(i) < hp->size) {
         inorderTraversal(hp, LCHILD(i)) ;
     }
-    printf("%d ", hp->elem[i].repetitions) ;
+    printf("(r: %d g: %d b: %d, repetitions = %i)", hp->elem[i].repetitions, hp->elem[i].r, hp->elem[i].g, hp->elem[i].b);
+
     if(RCHILD(i) < hp->size) {
         inorderTraversal(hp, RCHILD(i)) ;
     }
