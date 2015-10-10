@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "linkedlist.h"
+#include "minheap.h"
 
 #define LCHILD(x) 2 * x + 1
 #define RCHILD(x) 2 * x + 2
