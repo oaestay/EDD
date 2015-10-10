@@ -141,7 +141,7 @@ void insertNode(minHeap *hp, Element *data) {
 void deleteNode(minHeap *hp,pixel *min) {
     if(hp->size) {
         printf("Deleting node %d\n\n", hp->elem[0].repetitions) ;
-        *min = *hp->elem[0];
+        *min = (hp->elem[0]);
         hp->elem[0] = hp->elem[--(hp->size)] ;
         hp->elem = realloc(hp->elem, hp->size * sizeof(pixel)) ;
         heapify(hp, 0) ;
