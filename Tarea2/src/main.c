@@ -17,6 +17,8 @@ int main(int argc, char const *argv[]) {
     UINT    width, height;
     UINT    x, y;
 
+    minHeap heap;
+
     LinkedList *list = list_init();
 
     /* Read an image file */
