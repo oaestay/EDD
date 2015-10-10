@@ -61,7 +61,7 @@ void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
     int i ;
     Element findeado;
     // Insertion into the heap without violating the shape property
-    for(i = 0; i < pixeles.size; i++) {
+    for(i = 0; i < pixeles->size; i++) {
         if(hp->size) {
             hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(pixel)) ;
         } else {
