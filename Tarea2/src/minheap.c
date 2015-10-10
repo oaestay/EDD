@@ -60,7 +60,7 @@ void heapify(minHeap *hp, int i) {
 void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
     int i ;
     Element *findeado;
-    findeado = malloc(sizeof(Element));
+    //findeado = malloc(sizeof(Element));
     // Insertion into the heap without violating the shape property
     for(i = 0; i < pixeles->size; i++) {
         if(hp->size) {
