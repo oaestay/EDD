@@ -81,7 +81,7 @@ void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
     for(i = (hp->size - 1) / 2; i >= 0; i--) {
         heapify(hp, i) ;
     }
-    free(findeado);
+
 }
 
 
