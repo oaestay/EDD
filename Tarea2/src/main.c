@@ -6,6 +6,42 @@
 //
 //##############################################################################
 
+#include <stdio.h>
+#include "linkedlist.h"
+
 int main(int argc, char const *argv[]) {
-  return 0;
+
+    BMP*    bmp;
+    UCHAR  r, g, b;
+    UINT    width, height;
+    UINT    x, y;
+
+    LinkedList *list = list_init();
+
+    /* Read an image file */
+    bmp = BMP_ReadFile("test.bmp");
+    BMP_CHECK_ERROR( stderr, -1 ); /* If an error has occurred, notify and exit */
+
+    /* Get image's dimensions */
+    width = BMP_GetWidth( bmp );
+    height = BMP_GetHeight( bmp );
+    printf("Width: %lu Height:%lu\n",width,height);
+
+    /* Iterate through all the image's pixels */
+    for ( x = 0 ; x < width ; ++x )
+    {
+        for ( y = 0 ; y < height ; ++y )
+        {
+            /* Get pixel's RGB values */
+            BMP_GetPixelRGB( bmp, x, y, &r, &g, &b );
+            /* Adding pixels to the list */
+            list_add(list, r, g, b);
+        }
+    }
+    list_print(list);
+
+    BMP_Free(bmp);
+    list_destroy(list);
+
+    return 0;
 }

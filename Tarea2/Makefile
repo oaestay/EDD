@@ -28,7 +28,8 @@ OBJS_DIR = obj
 # OBJECTS LIST
 OBJS = \
 ./$(OBJS_DIR)/main.o \
-#./$(OBJS_DIR)/hash_linked.o \
+./$(OBJS_DIR)/linkedlist.o \
+./$(OBJS_DIR)/qdbmp.o \
 
 # CREATE OBJ
 CREATE_OBJ = \
