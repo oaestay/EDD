@@ -17,7 +17,7 @@ int main( int argc, char* argv[] )
     /* Get image's dimensions */
     width = BMP_GetWidth( bmp );
     height = BMP_GetHeight( bmp );
-    printf("Width: %u Height:%u\n",width,height);
+    printf("Width: %lu Height:%lu\n",width,height);
     /* Iterate through all the image's pixels */
     z = 1;
     for ( x = 0 ; x < width ; ++x )
@@ -27,7 +27,7 @@ int main( int argc, char* argv[] )
             /* Get pixel's RGB values */
             BMP_GetPixelRGB( bmp, x, y, &r, &g, &b );
 
-            printf("%u- r:%u, g:%u, b:%u \n",z,r,g,b);
+            printf("%lu- r:%lu, g:%lu, b:%lu \n",z,r,g,b);
             z++;
 
             /* Invert RGB values */
