@@ -1,5 +1,6 @@
 #include "qdbmp.h"
 #include <stdio.h>
+#include "minheap.c"
 
 int main( int argc, char* argv[] )
 {
@@ -9,8 +10,10 @@ int main( int argc, char* argv[] )
     UINT    x, y;
     List pixeles;
     Node findeado;
+    minHeap heap;
 
     /* Read an image file */
+
     findeado = malloc(sizeof(Node));
     bmp = BMP_ReadFile("test.bmp");
     BMP_CHECK_ERROR( stderr, -1 ); /* If an error has occurred, notify and exit */
@@ -26,9 +29,9 @@ int main( int argc, char* argv[] )
         {
             /* Get pixel's RGB values */
             BMP_GetPixelRGB( bmp, x, y, &r, &g, &b );
-            if (!List_find(findeado,*r,*g,*b))
+            if (!List_find(pixeles,findeado,*r,*g,*b))
             {
-              List_append(*r,*g,*b);
+              List_append(pixeles,*r,*g,*b);
             }
             else
             {
@@ -36,6 +39,8 @@ int main( int argc, char* argv[] )
             }
         }
     }
+    heap = initMinHeap(pixeles.size);
+    buildMinHeap(&heap,pixeles);
 
     /* Save result */
     /* Free all memory allocated for the image */
