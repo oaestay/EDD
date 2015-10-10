@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include "linkedlist.h"
+#include "minheap.h"
 
 int main(int argc, char const *argv[]) {
 
@@ -39,6 +40,9 @@ int main(int argc, char const *argv[]) {
         }
     }
     list_print(list);
+    heap = initMinHeap(list->size);
+    buildMinHeap(&heap, list);
+    inorderTraversal(&heap, 0);
 
     BMP_Free(bmp);
     list_destroy(list);

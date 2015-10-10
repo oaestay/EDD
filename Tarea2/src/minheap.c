@@ -7,19 +7,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "linkedlist.h"
 
 #define LCHILD(x) 2 * x + 1
 #define RCHILD(x) 2 * x + 2
 #define PARENT(x) (x - 1) / 2
-
-typedef struct node {
-    int data ;
-} node ;
-
-typedef struct minHeap {
-    int size ;
-    node *elem ;
-} minHeap ;
 
 
 /*
@@ -31,12 +23,11 @@ minHeap initMinHeap(int size) {
     return hp ;
 }
 
-
 /*
     Function to swap data within two nodes of the min heap using pointers
 */
-void swap(node *n1, node *n2) {
-    node temp = *n1 ;
+void swap(pixel *n1, pixel *n2) {
+    pixel temp = *n1 ;
     *n1 = *n2 ;
     *n2 = temp ;
 }
@@ -49,8 +40,8 @@ void swap(node *n1, node *n2) {
     heap property is never violated
 */
 void heapify(minHeap *hp, int i) {
-    int smallest = (LCHILD(i) < hp->size && hp->elem[LCHILD(i)].data < hp->elem[i].data) ? LCHILD(i) : i ;
-    if(RCHILD(i) < hp->size && hp->elem[RCHILD(i)].data < hp->elem[smallest].data) {
+    int smallest = (LCHILD(i) < hp->size && hp->elem[LCHILD(i)].repetitions < hp->elem[i].repetitions) ? LCHILD(i) : i ;
+    if(RCHILD(i) < hp->size && hp->elem[RCHILD(i)].repetitions < hp->elem[smallest].repetitions) {
         smallest = RCHILD(i) ;
     }
     if(smallest != i) {
@@ -65,18 +56,22 @@ void heapify(minHeap *hp, int i) {
     Instead of using insertNode() function n times for total complexity of O(nlogn),
     we can use the buildMinHeap() function to build the heap in O(n) time
 */
-void buildMinHeap(minHeap *hp, List *pixeles) {
+void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
     int i ;
-
+    Element findeado;
     // Insertion into the heap without violating the shape property
     for(i = 0; i < pixeles.size; i++) {
         if(hp->size) {
-            hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(node)) ;
+            hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(pixel)) ;
         } else {
-            hp->elem = malloc(sizeof(node)) ;
+            hp->elem = malloc(sizeof(pixel)) ;
         }
-        node nd ;
-        nd.data = arr[i] ;
+        pixel nd ;
+        findeado = list_get(pixeles,i)
+        nd.repetitions = findeado->repetitions;
+        nd.r = findeado->r;
+        nd.g = findeado->g;
+        nd.b = findeado->b;
         hp->elem[(hp->size)++] = nd ;
     }
 
@@ -87,24 +82,24 @@ void buildMinHeap(minHeap *hp, List *pixeles) {
 }
 
 
-void buildMinHeap(minHeap *hp, int *arr, int size) {
-    int i ;
+//void buildMinHeap(minHeap *hp, LinkedList *arr, int size) {
+  //  int i ;
 
     // Insertion into the heap without violating the shape property
-    for(i = 0; i < size; i++) {
-        if(hp->size) {
-            hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(node)) ;
-        } else {
-            hp->elem = malloc(sizeof(node)) ;
-        }
-        node nd ;
-        nd.data = arr[i] ;
-        hp->elem[(hp->size)++] = nd ;
-    }
+    //for(i = 0; i < size; i++) {
+      //  if(hp->size) {
+        //    hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(pixel)) ;
+        //} else {
+          //  hp->elem = malloc(sizeof(pixel)) ;
+      //  }
+      //  node nd ;
+      //  nd.data = arr[i] ;
+      //  hp->elem[(hp->size)++] = nd ;
+  //  }
 
     // Making sure that heap property is also satisfied
-    for(i = (hp->size - 1) / 2; i >= 0; i--) {
-        heapify(hp, i) ;
+    //for(i = (hp->size - 1) / 2; i >= 0; i--) {
+      //  heapify(hp, i) ;
     }
 }
 
@@ -113,18 +108,21 @@ void buildMinHeap(minHeap *hp, int *arr, int size) {
     Function to insert a node into the min heap, by allocating space for that node in the
     heap and also making sure that the heap property and shape propety are never violated.
 */
-void insertNode(minHeap *hp, int data) {
+void insertNode(minHeap *hp, Element data) {
     if(hp->size) {
-        hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(node)) ;
+        hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(pixel)) ;
     } else {
         hp->elem = malloc(sizeof(node)) ;
     }
 
-    node nd ;
-    nd.data = data ;
+    pixel nd ;
+    nd.repetitions = data->repetitions;
+    nd.r = data->r;
+    nd.g = data->g;
+    nd.b = data->b;
 
     int i = (hp->size)++ ;
-    while(i && nd.data < hp->elem[PARENT(i)].data) {
+    while(i && nd.repetitions < hp->elem[PARENT(i)].repetitions) {
         hp->elem[i] = hp->elem[PARENT(i)] ;
         i = PARENT(i) ;
     }
@@ -138,9 +136,10 @@ void insertNode(minHeap *hp, int data) {
     and then call heapify function to make sure that the heap property
     is never violated
 */
-void deleteNode(minHeap *hp) {
+void deleteNode(minHeap *hp,pixel *min) {
     if(hp->size) {
-        printf("Deleting node %d\n\n", hp->elem[0].data) ;
+        printf("Deleting node %d\n\n", hp->elem[0].repetitions) ;
+        *pixel = *hp->elem[0];
         hp->elem[0] = hp->elem[--(hp->size)] ;
         hp->elem = realloc(hp->elem, hp->size * sizeof(node)) ;
         heapify(hp, 0) ;
@@ -158,20 +157,6 @@ void deleteNode(minHeap *hp) {
     compare which is larger. It shall be done recursively until we get the maximum
     node
 */
-int getMaxNode(minHeap *hp, int i) {
-    if(LCHILD(i) >= hp->size) {
-        return hp->elem[i].data ;
-    }
-
-    int l = getMaxNode(hp, LCHILD(i)) ;
-    int r = getMaxNode(hp, RCHILD(i)) ;
-
-    if(l >= r) {
-        return l ;
-    } else {
-        return r ;
-    }
-}
 
 
 /*
@@ -189,7 +174,7 @@ void inorderTraversal(minHeap *hp, int i) {
     if(LCHILD(i) < hp->size) {
         inorderTraversal(hp, LCHILD(i)) ;
     }
-    printf("%d ", hp->elem[i].data) ;
+    printf("%d ", hp->elem[i].repetitions) ;
     if(RCHILD(i) < hp->size) {
         inorderTraversal(hp, RCHILD(i)) ;
     }
@@ -199,37 +184,14 @@ void inorderTraversal(minHeap *hp, int i) {
 /*
     Function to display all the nodes in the min heap by doing a preorder traversal
 */
-void preorderTraversal(minHeap *hp, int i) {
-    if(LCHILD(i) < hp->size) {
-        preorderTraversal(hp, LCHILD(i)) ;
-    }
-    if(RCHILD(i) < hp->size) {
-        preorderTraversal(hp, RCHILD(i)) ;
-    }
-    printf("%d ", hp->elem[i].data) ;
-}
+
 
 
 /*
     Function to display all the nodes in the min heap by doing a post order traversal
 */
-void postorderTraversal(minHeap *hp, int i) {
-    printf("%d ", hp->elem[i].data) ;
-    if(LCHILD(i) < hp->size) {
-        postorderTraversal(hp, LCHILD(i)) ;
-    }
-    if(RCHILD(i) < hp->size) {
-        postorderTraversal(hp, RCHILD(i)) ;
-    }
-}
 
 
-/*
-    Function to display all the nodes in the min heap by doing a level order traversal
-*/
-void levelorderTraversal(minHeap *hp) {
-    int i ;
-    for(i = 0; i < hp->size; i++) {
-        printf("%d ", hp->elem[i].data) ;
-    }
+
+
 }
