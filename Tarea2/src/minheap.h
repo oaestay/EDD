@@ -111,3 +111,4 @@ void deleteMinHeap(minHeap *hp) ;
 /*
     Function to display all the nodes in the min heap by doing a post order traversal
 */
+void inorderTraversal(minHeap *hp, int i);
