@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "qdbmp.h"
+#include "minheap.h"
 typedef struct node {
   int repetitions;
   UCHAR r;
