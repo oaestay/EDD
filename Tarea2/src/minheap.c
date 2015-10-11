@@ -170,8 +170,8 @@ void deltree(node * tree)
 {
     if (tree)
     {
-        //deltree(tree->left);
-        //deltree(tree->right);
+        deltree(tree->left);
+        deltree(tree->right);
         //free(tree->right);
         //free(tree->left);
     }
