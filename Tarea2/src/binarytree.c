@@ -59,7 +59,7 @@ node* search(node ** tree, int val)
         return NULL;
     }
 
-    if(val < (*tree)->data)
+    if(val < (*tree)->repetitions)
     {
         search(&((*tree)->left), val);
     }
@@ -71,4 +71,5 @@ node* search(node ** tree, int val)
     {
         return *tree;
     }
+    return NULL;
 }
