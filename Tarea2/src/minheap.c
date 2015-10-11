@@ -58,19 +58,19 @@ void heapify(minHeap *hp, int i) {
     Instead of using insertNode() function n times for total complexity of O(nlogn),
     we can use the buildMinHeap() function to build the heap in O(n) time
 */
-void buildMinHeap(minHeap *hp, LinkedList *pixels) {
+void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
     int i ;
     Element *findeado;
     //findeado = malloc(sizeof(Element));
     // Insertion into the heap without violating the shape property
-    for(i = 0; i < pixels->size; i++) {
+    for(i = 0; i < pixeles->size; i++) {
         if(hp->size) {
             hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(node)) ;
         } else {
-            hp->elem = malloc(sizeof(node)*pixels->size) ;
+            hp->elem = malloc(sizeof(node)*pixeles->size) ;
         }
         node nd ;
-        findeado = list_get(pixels,i);
+        findeado = list_get(pixeles,i);
         nd.repetitions = findeado->repetitions;
         nd.r = findeado->r;
         nd.g = findeado->g;

@@ -8,21 +8,17 @@
 #include <stdlib.h>
 #include <time.h>
 #include "linkedlist.h"
+#include "binarytree.h"
 
 #define LCHILD(x) 2 * x + 1
 #define RCHILD(x) 2 * x + 2
 #define PARENT(x) (x - 1) / 2
 
-typedef struct pixel {
-    int repetitions;
-    UCHAR r;
-    UCHAR g;
-    UCHAR b;
-} pixel ;
+
 
 typedef struct minHeap {
     int size ;
-    pixel *elem ;
+    node *elem ;
 } minHeap ;
 
 
@@ -34,7 +30,7 @@ minHeap initMinHeap(int size);
 /*
     Function to swap data within two nodes of the min heap using pointers
 */
-void swap(pixel *n1, pixel *n2);
+void swap(node *n1, node *n2);
 
 /*
     Heapify function is used to make sure that the heap property is never violated
@@ -59,9 +55,9 @@ void buildMinHeap(minHeap *hp, LinkedList *pixeles) ;
     // Insertion into the heap without violating the shape property
     //for(i = 0; i < size; i++) {
       //  if(hp->size) {
-        //    hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(pixel)) ;
+        //    hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(node)) ;
         //} else {
-          //  hp->elem = malloc(sizeof(pixel)) ;
+          //  hp->elem = malloc(sizeof(node)) ;
       //  }
       //  node nd ;
       //  nd.data = arr[i] ;
@@ -85,7 +81,7 @@ void insertNode(minHeap *hp, Element *data);
     and then call heapify function to make sure that the heap property
     is never violated
 */
-void deleteNode(minHeap *hp,pixel *min) ;
+void deleteNode(minHeap *hp,node *min) ;
 
 
 /*
