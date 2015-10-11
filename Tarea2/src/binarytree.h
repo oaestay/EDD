@@ -1,14 +1,14 @@
 #include<stdlib.h>
 #include<stdio.h>
 
-struct bin_tree {
+typedef struct node {
   int repetitions;
   UCHAR r;
   UCHAR g;
   UCHAR b;
-  struct bin_tree * right, * left;
-};
-typedef struct bin_tree node;
+  struct node * right, * left;
+}node
+
 
 void insert(node ** tree, int val);
 
