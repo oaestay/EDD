@@ -17,7 +17,7 @@ node *merge(node *arbol1,node *arbol2)
   return newroot;
 }
 
-node Createtree(minHeap heap)
+node Createtree(minHeap *heap)
 {
   node menor1;
   node menor2;
