@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
+#include "qdbmp.h"
 typedef struct node {
   int repetitions;
   UCHAR r;
   UCHAR g;
   UCHAR b;
-  struct node * right, * left;
+  struct node *right, *left;
 }node;
 
 
