@@ -172,7 +172,8 @@ void deltree(node * tree)
     {
         deltree(tree->left);
         deltree(tree->right);
-        free(tree);
+        free(tree->right);
+        free(tree->left);
     }
 
 
