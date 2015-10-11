@@ -11,6 +11,9 @@ node initNode(int size) {
 node *merge(node *arbol1,node *arbol2)
 {
   node *newroot = malloc(sizeof(node));
+  newroot->r = NULL;
+  newroot->b = NULL;
+  newroot->g = NULL;
   newroot->repetitions = arbol1->repetitions + arbol2->repetitions;
   newroot->left = arbol1;
   newroot->right = arbol2;
