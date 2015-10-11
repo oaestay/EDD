@@ -9,8 +9,7 @@ typedef struct node {
   struct node *right, *left;
 }node;
 
-
-void insert(node ** tree, int val);
+node *merge(node *arbol1,node *arbol2);
 
 
 void print_preorder(node * tree);
