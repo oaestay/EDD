@@ -7,7 +7,7 @@ typedef struct node {
   UCHAR g;
   UCHAR b;
   struct node * right, * left;
-}node
+}node;
 
 
 void insert(node ** tree, int val);
