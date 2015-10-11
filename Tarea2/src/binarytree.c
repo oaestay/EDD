@@ -67,7 +67,7 @@ void print_postorder(node * tree)
 
 void deltree(node * tree)
 {
-    if (tree)
+    if (tree!=NULL)
     {
         deltree(tree->left);
         deltree(tree->right);
