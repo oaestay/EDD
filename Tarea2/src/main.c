@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "linkedlist.h"
 #include "minheap.h"
+#include "binarytree.h"
 
 int main(int argc, char const *argv[]) {
 
@@ -18,6 +19,7 @@ int main(int argc, char const *argv[]) {
     UINT    x, y;
 
     minHeap heap;
+    node arbolito;
 
     LinkedList *list = list_init();
 
@@ -45,7 +47,10 @@ int main(int argc, char const *argv[]) {
     heap = initMinHeap(list->size);
     buildMinHeap(&heap, list);
     inorderTraversal(&heap, 0);
+    arbolito = initNode(heap->size);
 
+    Createtree(heap);
+    deltree(&arbolito);
     BMP_Free(bmp);
     list_destroy(list);
     deleteMinHeap(&heap);

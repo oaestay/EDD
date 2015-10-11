@@ -11,6 +11,9 @@ typedef struct node {
 
 node *merge(node *arbol1,node *arbol2);
 
+node initNode(int size);
+
+node Createtree(minHeap heap);
 
 void print_preorder(node * tree);
 

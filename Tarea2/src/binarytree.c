@@ -1,7 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "binarytree.h"
+#include "minheap.h"
 
+node initNode(int size) {
+    node nd ;
+    nd.repetitions = 0 ;
+    return nd ;
+}
 
 node *merge(node *arbol1,node *arbol2)
 {
@@ -10,6 +16,23 @@ node *merge(node *arbol1,node *arbol2)
   newroot->left = arbol1;
   newroot->right = arbol2;
   return newroot;
+}
+
+node Createtree(minHeap heap)
+{
+  node menor1;
+  node menor2;
+  node temproot;
+  int i = heap->size-1;
+  while(i > 0 )
+  {
+    deleteNode(heap,&menor1);
+    deleteNode(heap,&menor2);
+    &temproot=merge(&menor1,&menor2);
+    i--;
+  }
+  return temproot;
+
 }
 
 void print_preorder(node * tree)
@@ -51,6 +74,7 @@ void deltree(node * tree)
         deltree(tree->right);
         free(tree);
     }
+
 }
 
 node* search(node ** tree, int val)
