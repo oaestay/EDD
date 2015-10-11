@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "binarytree.h"
-#include "minheap.h"
 
 node initNode(int size) {
     node nd ;
