@@ -17,17 +17,17 @@ node *merge(node *arbol1,node *arbol2)
   return newroot;
 }
 
-node *Createtree(minHeap *heap)
+node Createtree(minHeap *heap)
 {
   node menor1;
   node menor2;
-  node *temproot;
+  node temproot;
   int i = heap->size-1;
   while(i > 0 )
   {
     deleteNode(heap,&menor1);
     deleteNode(heap,&menor2);
-    temproot=merge(&menor1,&menor2);
+    temproot=*merge(&menor1,&menor2);
     i--;
   }
   return temproot;
