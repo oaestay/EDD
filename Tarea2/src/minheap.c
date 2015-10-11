@@ -112,7 +112,7 @@ void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
     Function to insert a node into the min heap, by allocating space for that node in the
     heap and also making sure that the heap property and shape propety are never violated.
 */
-void insertNode(minHeap *hp, Element *data) {
+void insertNode(minHeap *hp, node *data) {
     if(hp->size) {
         hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(node)) ;
     } else {

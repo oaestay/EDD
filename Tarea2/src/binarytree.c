@@ -28,7 +28,9 @@ node *Createtree(minHeap *heap)
     deleteNode(heap,&menor1);
     deleteNode(heap,&menor2);
     temproot=merge(&menor1,&menor2);
+    insertNode(heap,temproot);
     i--;
+
   }
   return temproot;
 
