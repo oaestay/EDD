@@ -2,13 +2,6 @@
 #include <stdio.h>
 #include "qdbmp.h"
 #include "minheap.h"
-typedef struct node {
-  int repetitions;
-  UCHAR r;
-  UCHAR g;
-  UCHAR b;
-  struct node *right, *left;
-}node;
 
 node *merge(node *arbol1,node *arbol2);
 

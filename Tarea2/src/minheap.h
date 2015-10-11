@@ -14,7 +14,13 @@
 #define RCHILD(x) 2 * x + 2
 #define PARENT(x) (x - 1) / 2
 
-
+typedef struct node {
+  int repetitions;
+  UCHAR r;
+  UCHAR g;
+  UCHAR b;
+  struct node *right, *left;
+}node
 
 typedef struct minHeap {
     int size ;
