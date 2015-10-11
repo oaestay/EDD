@@ -74,6 +74,8 @@ void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
         nd.r = findeado->r;
         nd.g = findeado->g;
         nd.b = findeado->b;
+        nd.right = (node *) NULL;
+        nd.left = (node *) NULL;
         hp->elem[(hp->size)++] = nd ;
     }
 
