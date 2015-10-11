@@ -1,6 +1,6 @@
 #include<stdlib.h>
 #include<stdio.h>
-#include"binarytree.h"
+#include "binarytree.h"
 
 
 node *merge(node *arbol1,node *arbol2)
