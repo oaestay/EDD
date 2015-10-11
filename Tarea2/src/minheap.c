@@ -9,6 +9,7 @@
 #include <time.h>
 #include "linkedlist.h"
 #include "minheap.h"
+#include "binarytree.h"
 
 #define LCHILD(x) 2 * x + 1
 #define RCHILD(x) 2 * x + 2
@@ -27,8 +28,8 @@ minHeap initMinHeap(int size) {
 /*
     Function to swap data within two nodes of the min heap using pointers
 */
-void swap(pixel *n1, pixel *n2) {
-    pixel temp = *n1 ;
+void swap(node *n1, node *n2) {
+    node temp = *n1 ;
     *n1 = *n2 ;
     *n2 = temp ;
 }
@@ -57,19 +58,19 @@ void heapify(minHeap *hp, int i) {
     Instead of using insertNode() function n times for total complexity of O(nlogn),
     we can use the buildMinHeap() function to build the heap in O(n) time
 */
-void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
+void buildMinHeap(minHeap *hp, LinkedList *pixels) {
     int i ;
     Element *findeado;
     //findeado = malloc(sizeof(Element));
     // Insertion into the heap without violating the shape property
-    for(i = 0; i < pixeles->size; i++) {
+    for(i = 0; i < pixels->size; i++) {
         if(hp->size) {
-            hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(pixel)) ;
+            hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(node)) ;
         } else {
-            hp->elem = malloc(sizeof(pixel)*pixeles->size) ;
+            hp->elem = malloc(sizeof(node)*pixels->size) ;
         }
-        pixel nd ;
-        findeado = list_get(pixeles,i);
+        node nd ;
+        findeado = list_get(pixels,i);
         nd.repetitions = findeado->repetitions;
         nd.r = findeado->r;
         nd.g = findeado->g;
@@ -91,9 +92,9 @@ void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
     // Insertion into the heap without violating the shape property
     //for(i = 0; i < size; i++) {
       //  if(hp->size) {
-        //    hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(pixel)) ;
+        //    hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(node)) ;
         //} else {
-          //  hp->elem = malloc(sizeof(pixel)) ;
+          //  hp->elem = malloc(sizeof(node)) ;
       //  }
       //  node nd ;
       //  nd.data = arr[i] ;
@@ -112,12 +113,12 @@ void buildMinHeap(minHeap *hp, LinkedList *pixeles) {
 */
 void insertNode(minHeap *hp, Element *data) {
     if(hp->size) {
-        hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(pixel)) ;
+        hp->elem = realloc(hp->elem, (hp->size + 1) * sizeof(node)) ;
     } else {
-        hp->elem = malloc(sizeof(pixel)) ;
+        hp->elem = malloc(sizeof(node)) ;
     }
 
-    pixel nd ;
+    node nd ;
     nd.repetitions = data->repetitions;
     nd.r = data->r;
     nd.g = data->g;
@@ -138,12 +139,12 @@ void insertNode(minHeap *hp, Element *data) {
     and then call heapify function to make sure that the heap property
     is never violated
 */
-void deleteNode(minHeap *hp,pixel *min) {
+void deleteNode(minHeap *hp,node *min) {
     if(hp->size) {
         printf("Deleting node %d\n\n", hp->elem[0].repetitions) ;
         *min = (hp->elem[0]);
         hp->elem[0] = hp->elem[--(hp->size)] ;
-        hp->elem = realloc(hp->elem, hp->size * sizeof(pixel)) ;
+        hp->elem = realloc(hp->elem, hp->size * sizeof(node)) ;
         heapify(hp, 0) ;
     } else {
         printf("\nMin Heap is empty!\n") ;

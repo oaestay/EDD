@@ -1,12 +1,15 @@
 #include<stdlib.h>
 #include<stdio.h>
+#include"binarytree.h"
 
-struct bin_tree {
-int data;
-struct bin_tree * right, * left;
-};
-typedef struct bin_tree node;
 
+node *merge(node *arbol1,node *arbol2)
+{
+  node * newroot = (node *)malloc(sizeof(node));
+  newroot->repetitions = arbol1->repetitions + arbol2->repetitions;
+  newroot->left = arbol1;
+  newroot->right = arbol2;
+}
 void insert(node ** tree, int val)
 {
     node *temp = NULL;
