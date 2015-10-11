@@ -168,10 +168,10 @@ void deleteNode(minHeap *hp,node *min) {
 */
 void deltree(node * tree)
 {
-    if (tree!=NULL)
-    {
-        deltree(tree->left);
-        deltree(tree->right);
+    //if (tree!=NULL)
+    //{
+        //deltree(tree->left);
+        //deltree(tree->right);
         //free(tree->right);
         //free(tree->left);
     }
