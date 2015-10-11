@@ -19,7 +19,7 @@ typedef struct node {
   UCHAR g;
   UCHAR b;
   struct node *right, *left;
-}node
+}node;
 
 typedef struct minHeap {
     int size ;
