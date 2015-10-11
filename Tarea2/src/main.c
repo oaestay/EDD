@@ -8,7 +8,6 @@
 
 #include <stdio.h>
 #include "linkedlist.h"
-#include "minheap.h"
 #include "binarytree.h"
 
 int main(int argc, char const *argv[]) {
