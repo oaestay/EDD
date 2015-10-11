@@ -69,12 +69,13 @@ void print_postorder(node * tree)
 
 void deltree(node * tree)
 {
-    if (tree!=NULL)
-    {
-        deltree(tree->left);
-        deltree(tree->right);
-        free(tree);
-    }
+  //  if (tree!=NULL)
+    //{
+      //  deltree(tree->left);
+        //deltree(tree->right);
+        //free(tree);
+    //}
+    free(tree);
 
 }
 
