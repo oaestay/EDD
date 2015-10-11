@@ -141,11 +141,11 @@ void insertNode(minHeap *hp, node *data) {
     is never violated
 */
 void deleteNode(minHeap *hp,node *min) {
-    if(hp->size) {	
+    if(hp->size) {
         printf("Deleting node %d\n\n", hp->elem[0].repetitions) ;
-	memcpy(min, &(hp->elem[0]), sizeof(node));
+	      memcpy(min, &(hp->elem[0]), sizeof(node));
         hp->elem[0] = hp->elem[--(hp->size)] ;
-        hp->elem = realloc(hp->elem, hp->size * sizeof(node)) ;	
+        hp->elem = realloc(hp->elem, hp->size * sizeof(node)) ;
         heapify(hp, 0) ;
     } else {
         printf("\nMin Heap is empty!\n") ;
@@ -172,14 +172,14 @@ void deltree(node * tree)
 {
     if (tree)
     {
-		
+
         deltree(tree->left);
         deltree(tree->right);
-	free(tree);
-	printf("que sucede");
+	      free(tree);
+	      printf("que sucede");
         //free(tree->right);
         //free(tree->left);
-	
+
     }
 
 
