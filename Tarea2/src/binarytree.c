@@ -13,14 +13,17 @@ node initNode(int size) {
 node *merge(node *arbol1,node *arbol2)
 {
   node *newroot = malloc(sizeof(node));
-  newroot->left = malloc(sizeof(node)); 
-  newroot->right = malloc(sizeof(node)); 
+  newroot->r = '\0';
+  newroot->g = '\0';
+  newroot->b = '\0';
+  newroot->left = malloc(sizeof(node));
+  newroot->right = malloc(sizeof(node));
   newroot->repetitions = arbol1->repetitions + arbol2->repetitions;
   memcpy((newroot->left),arbol1,sizeof(node));
   memcpy((newroot->right),arbol2,sizeof(node));
   //newroot->left = arbol1;
   //newroot->right = arbol2;
-  
+
   return newroot;
 }
 
@@ -40,10 +43,10 @@ node *Createtree(minHeap *heap)
     free(temproot);
 
   }
-  
+
 
   return &heap->elem[0];
-  
+
 
 }
 
@@ -62,7 +65,6 @@ void print_inorder(node * tree)
 {
     if (tree)
     {
-        
         print_inorder(tree->left);
         printf("%d huehue\n",tree->repetitions);
         print_inorder(tree->right);
@@ -79,15 +81,12 @@ void print_postorder(node * tree)
     }
 }
 
-
-
 node* search(node ** tree, int val)
 {
     if(!(*tree))
     {
         return NULL;
     }
-
     if(val < (*tree)->repetitions)
     {
         search(&((*tree)->left), val);
@@ -101,4 +100,15 @@ node* search(node ** tree, int val)
         return *tree;
     }
     return NULL;
+}
+void savePath(node *tree, int Code){
+    if (tree->r != '\0')
+        //codeTable[(int)tree->letter] = Code;
+        printf("%d %d %d -> %i \n", tree->r, tree->g, tree->b, Code);
+    else{
+        savePath(tree->left, Code*10+1);
+        savePath(tree->right, Code*10+2);
+    }
+
+    return;
 }

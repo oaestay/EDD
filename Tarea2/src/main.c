@@ -16,29 +16,23 @@ int main(int argc, char const *argv[]) {
     UCHAR  r, g, b;
     UINT    width, height;
     UINT    x, y;
-
     minHeap heap;
     node arbolito;
 
     LinkedList *list = list_init();
 
-    /* Read an image file */
     bmp = BMP_ReadFile("colores.bmp");
-    BMP_CHECK_ERROR( stderr, -1 ); /* If an error has occurred, notify and exit */
+    BMP_CHECK_ERROR( stderr, -1 );
 
-    /* Get image's dimensions */
     width = BMP_GetWidth( bmp );
     height = BMP_GetHeight( bmp );
     printf("Width: %lu Height:%lu\n",width,height);
 
-    /* Iterate through all the image's pixels */
     for ( x = 0 ; x < width ; ++x )
     {
         for ( y = 0 ; y < height ; ++y )
         {
-            /* Get pixel's RGB values */
             BMP_GetPixelRGB( bmp, x, y, &r, &g, &b );
-            /* Adding pixels to the list */
             list_add(list, r, g, b);
         }
     }
@@ -46,16 +40,13 @@ int main(int argc, char const *argv[]) {
     heap = initMinHeap(list->size);
     buildMinHeap(&heap, list);
     inorderTraversal(&heap, 0);
-    //arbolito = initNode(heap.size);
 
     arbolito=*Createtree(&heap);
-    
-    
-    //printf("%i\n",arbolito.repetitions);
-    print_inorder(&arbolito);
+
+
+    savePath(&arbolito, 0);
 
     deltree(&arbolito);
-    //free(&arbolito);
     BMP_Free(bmp);
     list_destroy(list);
     deleteMinHeap(&heap);
