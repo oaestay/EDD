@@ -48,7 +48,7 @@ int main(int argc, char const *argv[]) {
     inorderTraversal(&heap, 0);
     arbolito = initNode(heap.size);
 
-    Createtree(heap);
+    Createtree(&heap);
     deltree(&arbolito);
     BMP_Free(bmp);
     list_destroy(list);
