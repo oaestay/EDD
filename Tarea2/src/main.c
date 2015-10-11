@@ -23,7 +23,7 @@ int main(int argc, char const *argv[]) {
     LinkedList *list = list_init();
 
     /* Read an image file */
-    bmp = BMP_ReadFile("test.bmp");
+    bmp = BMP_ReadFile("colores.bmp");
     BMP_CHECK_ERROR( stderr, -1 ); /* If an error has occurred, notify and exit */
 
     /* Get image's dimensions */
@@ -49,7 +49,9 @@ int main(int argc, char const *argv[]) {
     //arbolito = initNode(heap.size);
 
     arbolito=Createtree(&heap);
-    //print_preorder(&arbolito);
+
+    print_preorder(arbolito);
+
     deltree(arbolito);
     BMP_Free(bmp);
     list_destroy(list);
