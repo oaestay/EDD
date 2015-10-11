@@ -19,15 +19,15 @@ node *merge(node *arbol1,node *arbol2)
 
 node *Createtree(minHeap *heap)
 {
-  node *menor1;
-  node *menor2;
+  node menor1;
+  node menor2;
   node *temproot;
   int i = heap->size-1;
   while(i > 0 )
   {
-    deleteNode(heap,menor1);
-    deleteNode(heap,menor2);
-    temproot=merge(menor1,menor2);
+    deleteNode(heap,&menor1);
+    deleteNode(heap,&menor2);
+    temproot=merge(&menor1,&menor2);
     i--;
   }
   return temproot;
