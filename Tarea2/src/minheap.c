@@ -172,8 +172,8 @@ void deltree(node * tree)
     {
         deltree(tree->left);
         deltree(tree->right);
-        free(tree->right);
-        free(tree->left);
+        //free(tree->right);
+        //free(tree->left);
     }
 
 
@@ -184,7 +184,7 @@ void deleteMinHeap(minHeap *hp) {
     {
       deltree(&(hp->elem[i]));
     }
-    free(hp->elem) ;
+    //free(hp->elem) ;
 }
 
 
