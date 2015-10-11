@@ -53,7 +53,7 @@ int main(int argc, char const *argv[]) {
     deltree(arbolito);
     BMP_Free(bmp);
     list_destroy(list);
-    deleteMinHeap(&heap);
+    //deleteMinHeap(&heap);
 
     return 0;
 }

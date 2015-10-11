@@ -27,7 +27,9 @@ node *Createtree(minHeap *heap)
 {
   node menor1;
   node menor2;
+  node *final;
   node *temproot;
+  final=malloc(sizeof(node));
   int i = heap->size-1;
   while(i > 0 )
   {
@@ -38,7 +40,9 @@ node *Createtree(minHeap *heap)
     i--;
 
   }
-  return temproot;
+  memcpy(final,temproot,sizeof(node));
+  free (heap->elem);
+  return final;
 
 }
 
