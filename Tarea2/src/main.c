@@ -46,9 +46,9 @@ int main(int argc, char const *argv[]) {
     heap = initMinHeap(list->size);
     buildMinHeap(&heap, list);
     inorderTraversal(&heap, 0);
-    arbolito = initNode(heap.size);
 
-    Createtree(&heap);
+
+    &arbolito = Createtree(&heap);
     deltree(&arbolito);
     BMP_Free(bmp);
     list_destroy(list);
