@@ -86,6 +86,7 @@ void insertNode(minHeap *hp, node *data);
     and then call heapify function to make sure that the heap property
     is never violated
 */
+void deltree(node * tree);
 void deleteNode(minHeap *hp,node *min) ;
 
 

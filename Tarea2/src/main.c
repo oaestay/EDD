@@ -49,7 +49,7 @@ int main(int argc, char const *argv[]) {
     //arbolito = initNode(heap.size);
 
     arbolito=*Createtree(&heap);
-    deltree(&arbolito);
+    //deltree(&arbolito);
     BMP_Free(bmp);
     list_destroy(list);
     deleteMinHeap(&heap);

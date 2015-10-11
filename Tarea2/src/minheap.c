@@ -166,8 +166,24 @@ void deleteNode(minHeap *hp,node *min) {
 /*
     Function to clear the memory allocated for the min heap
 */
+void deltree(node * tree)
+{
+  / if (tree!=NULL)
+    {
+        deltree(tree->left);
+        deltree(tree->right);
+        free(tree);
+    }
+
+
+}
 void deleteMinHeap(minHeap *hp) {
-    free(hp->elem) ;
+    int i;
+    for(i=0;i<hp->size;i++)
+    {
+      deltree(hp->&elem[i]);
+    }
+    //free(hp->elem) ;
 }
 
 

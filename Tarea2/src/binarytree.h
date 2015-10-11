@@ -18,7 +18,7 @@ void print_inorder(node * tree);
 void print_postorder(node * tree);
 
 
-void deltree(node * tree);
+
 
 
 node* search(node ** tree, int val);
