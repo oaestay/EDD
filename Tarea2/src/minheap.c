@@ -182,9 +182,9 @@ void deleteMinHeap(minHeap *hp) {
     int i;
     for(i=0;i<hp->size;i++)
     {
-      deltree(&(hp->elem[i]));
+      //deltree(&(hp->elem[i]));
     }
-    //free(hp->elem) ;
+    free(hp->elem) ;
 }
 
 
