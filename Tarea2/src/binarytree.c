@@ -9,6 +9,7 @@ node *merge(node *arbol1,node *arbol2)
   newroot->repetitions = arbol1->repetitions + arbol2->repetitions;
   newroot->left = arbol1;
   newroot->right = arbol2;
+  return newroot;
 }
 
 void print_preorder(node * tree)
