@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "qdbmp.h"
 #include "minheap.h"
+#include "dictionary.h"
 
 node *merge(node *arbol1,node *arbol2);
 
@@ -17,4 +17,4 @@ void print_postorder(node *tree);
 
 node* search(node **tree, int val);
 
-void savePath(node *tree, int Code);
+void savePath(Dictionary *dict, node *tree, char *code);

@@ -13,9 +13,6 @@ node initNode(int size) {
 node *merge(node *arbol1,node *arbol2)
 {
   node *newroot = malloc(sizeof(node));
-  newroot->r = '\0';
-  newroot->g = '\0';
-  newroot->b = '\0';
   newroot->left = malloc(sizeof(node));
   newroot->right = malloc(sizeof(node));
   newroot->repetitions = arbol1->repetitions + arbol2->repetitions;
@@ -23,7 +20,6 @@ node *merge(node *arbol1,node *arbol2)
   memcpy((newroot->right),arbol2,sizeof(node));
   //newroot->left = arbol1;
   //newroot->right = arbol2;
-
   return newroot;
 }
 
@@ -37,24 +33,19 @@ node *Createtree(minHeap *heap)
   {
     deleteNode(heap,&menor1);
     deleteNode(heap,&menor2);
-    temproot=merge(&menor1,&menor2);
+    temproot = merge(&menor1,&menor2);
     insertNode(heap,temproot);
     i--;
     free(temproot);
-
   }
-
-
   return &heap->elem[0];
-
-
 }
 
 void print_preorder(node * tree)
 {
     if (tree)
     {
-        printf("%d\n",tree->repetitions);
+        printf("%d %d %d -> %i \n", tree->r, tree->g, tree->b, tree->repetitions);
         print_preorder(tree->left);
         print_preorder(tree->right);
     }
@@ -66,7 +57,7 @@ void print_inorder(node * tree)
     if (tree)
     {
         print_inorder(tree->left);
-        printf("%d huehue\n",tree->repetitions);
+        printf("%d %d %d -> %i \n", tree->r, tree->g, tree->b, tree->repetitions);
         print_inorder(tree->right);
     }
 }
@@ -77,7 +68,7 @@ void print_postorder(node * tree)
     {
         print_postorder(tree->left);
         print_postorder(tree->right);
-        printf("%d\n",tree->repetitions);
+        printf("%d %d %d -> %i \n", tree->r, tree->g, tree->b, tree->repetitions);
     }
 }
 
@@ -101,13 +92,22 @@ node* search(node ** tree, int val)
     }
     return NULL;
 }
-void savePath(node *tree, int Code){
-    if (tree->r != '\0')
-        //codeTable[(int)tree->letter] = Code;
-        printf("%d %d %d -> %i \n", tree->r, tree->g, tree->b, Code);
+void savePath(Dictionary *dict, node *tree, char *code){
+    if (!tree->right && !tree->left){
+        insert_dictionary(dict, tree->r, tree->g, tree->b, code);
+        //printf("%d %d %d -> %s \n", tree->r, tree->g, tree->b, code);
+    }
     else{
-        savePath(tree->left, Code*10+1);
-        savePath(tree->right, Code*10+2);
+        char *result0 = malloc(strlen(code)+2);
+        char *result1 = malloc(strlen(code)+2);
+        strcpy(result0, code);
+        strcpy(result1, code);
+        strcat(result0, "0");
+        strcat(result1, "1");
+        savePath(dict, tree->left, result0);
+        savePath(dict, tree->right, result1);
+        free(result0);
+        free(result1);
     }
 
     return;

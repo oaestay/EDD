@@ -21,7 +21,7 @@ int main(int argc, char const *argv[]) {
 
     LinkedList *list = list_init();
 
-    bmp = BMP_ReadFile("colores.bmp");
+    bmp = BMP_ReadFile("Medio.bmp");
     BMP_CHECK_ERROR( stderr, -1 );
 
     width = BMP_GetWidth( bmp );
@@ -36,16 +36,17 @@ int main(int argc, char const *argv[]) {
             list_add(list, r, g, b);
         }
     }
-    list_print(list);
     heap = initMinHeap(list->size);
     buildMinHeap(&heap, list);
     inorderTraversal(&heap, 0);
-
     arbolito=*Createtree(&heap);
-
-
-    savePath(&arbolito, 0);
-
+    list_print(list);
+    printf("-----\n");
+    char *str = "";
+    Dictionary *d = init_dictionary(list->size);
+    savePath(d ,&arbolito, str);
+    print_dictionary(d);
+    destroy_dictionary(d);
     deltree(&arbolito);
     BMP_Free(bmp);
     list_destroy(list);

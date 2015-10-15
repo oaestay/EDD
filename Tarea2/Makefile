@@ -30,8 +30,9 @@ OBJS = \
 ./$(OBJS_DIR)/main.o \
 ./$(OBJS_DIR)/minheap.o \
 ./$(OBJS_DIR)/linkedlist.o \
-./$(OBJS_DIR)/qdbmp.o \
 ./$(OBJS_DIR)/binarytree.o \
+./$(OBJS_DIR)/dictionary.o \
+./$(OBJS_DIR)/qdbmp.o \
 
 # CREATE OBJ
 CREATE_OBJ = \

@@ -236,14 +236,14 @@ void list_print(LinkedList *list)
 
     Element *elementCurrent;
 
-    printf("{");
+    printf("{\n");
 
     if (list->size > 0)
     {
         elementCurrent = list->first;
         while (elementCurrent != NULL)
         {
-            printf("(r: %d g: %d b: %d, repetitions = %i)", elementCurrent->r, elementCurrent->g, elementCurrent->b, elementCurrent->repetitions);
+            printf("(r: %d g: %d b: %d, repetitions = %i)\n", elementCurrent->r, elementCurrent->g, elementCurrent->b, elementCurrent->repetitions);
             elementCurrent = elementCurrent->next;
             if (elementCurrent != NULL)
             {

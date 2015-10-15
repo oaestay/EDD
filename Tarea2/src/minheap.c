@@ -69,7 +69,7 @@ void insertNode(minHeap *hp, node *data) {
     } else {
         hp->elem = malloc(sizeof(node)) ;
     }
-    node *nd =malloc(sizeof(node));
+    node *nd = malloc(sizeof(node));
     nd->repetitions = data->repetitions;
     nd->r = data->r;
     nd->g = data->g;
@@ -87,7 +87,6 @@ void insertNode(minHeap *hp, node *data) {
 
 void deleteNode(minHeap *hp,node *min) {
     if(hp->size) {
-        printf("Deleting node %d\n\n", hp->elem[0].repetitions);
     	node *nd=malloc(sizeof(node));
     	nd->repetitions = hp->elem[0].repetitions;
     	nd->r = hp->elem[0].r;
@@ -124,7 +123,6 @@ void inorderTraversal(minHeap *hp, int i) {
     if(LCHILD(i) < hp->size) {
         inorderTraversal(hp, LCHILD(i)) ;
     }
-    printf("%i\n", hp->elem[i].repetitions);
     if(RCHILD(i) < hp->size) {
         inorderTraversal(hp, RCHILD(i)) ;
     }
