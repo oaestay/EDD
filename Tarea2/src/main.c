@@ -31,9 +31,11 @@ int main(int argc, char const *argv[]) {
         for ( y = 0 ; y < height ; ++y )
         {
             BMP_GetPixelRGB( bmp, x, y, &r, &g, &b );
-            list_add(list, r, g, b);
+            list_add(list, r, g, b, 0);
         }
     }
+
+    list_add(list,NULL,NULL,NULL,1);
     heap = initMinHeap(list->size);
     buildMinHeap(&heap, list);
     inorderTraversal(&heap, 0);
