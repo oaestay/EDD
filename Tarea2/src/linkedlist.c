@@ -49,72 +49,28 @@ void list_destroy(LinkedList *list)
     free(list);
 }
 
-void list_add(LinkedList *list, UCHAR r, UCHAR g, UCHAR b)
+void list_add(LinkedList *list, UCHAR r, UCHAR g, UCHAR b, int sep)
 {
     list_alloc_test(list);
 
     Element *elementCurrent, *elementPrevious;
-
-    if (list->size == 0)
-    {
-        list->first->r = r;
-        list->first->g = g;
-        list->first->b = b;
-        list->first->repetitions = 1;
-        list->size += 1;
-    }
-    else if (list->size == 1)
-    {
-        elementCurrent = list->first;
-        if (elementCurrent->r == r && elementCurrent->g == g && elementCurrent->b == b)
+    if (sep == 0){
+        if (list->size == 0)
         {
-            elementCurrent->repetitions += 1;
-        }
-        else
-        {
-            Element *element = malloc(sizeof(*element));
-            if (element == NULL)
-            {
-                exit(EXIT_FAILURE);
-            }
-            element->r = r;
-            element->g = g;
-            element->b = b;
-            element->repetitions = 1;
-            element->next = NULL;
-            element->previous = list->last;
-
-            list->last->next = element;
-            list->last = element;
+            list->first->r = r;
+            list->first->g = g;
+            list->first->b = b;
+            list->first->repetitions = 1;
             list->size += 1;
         }
-    }
-    else
-    {
-        elementPrevious = list->first;
-        elementCurrent = elementPrevious->next;
-
-        if (elementPrevious->r == r && elementPrevious->g == g && elementPrevious->b == b)
+        else if (list->size == 1)
         {
-            elementPrevious->repetitions += 1;
-        }
-        else
-        {
-            int iKeepGoing = 1;
-            while (elementCurrent != NULL && iKeepGoing == 1)
+            elementCurrent = list->first;
+            if (elementCurrent->r == r && elementCurrent->g == g && elementCurrent->b == b)
             {
-                if (elementCurrent->r == r && elementCurrent->g == g && elementCurrent->b == b)
-                {
-                    iKeepGoing = 0;
-                    elementCurrent->repetitions += 1;
-                }
-                else
-                {
-                    elementPrevious = elementCurrent;
-                    elementCurrent = elementCurrent->next;
-                }
+                elementCurrent->repetitions += 1;
             }
-            if (iKeepGoing == 1)
+            else
             {
                 Element *element = malloc(sizeof(*element));
                 if (element == NULL)
@@ -132,6 +88,79 @@ void list_add(LinkedList *list, UCHAR r, UCHAR g, UCHAR b)
                 list->last = element;
                 list->size += 1;
             }
+        }
+        else
+        {
+            elementPrevious = list->first;
+            elementCurrent = elementPrevious->next;
+
+            if (elementPrevious->r == r && elementPrevious->g == g && elementPrevious->b == b)
+            {
+                elementPrevious->repetitions += 1;
+            }
+            else
+            {
+                int iKeepGoing = 1;
+                while (elementCurrent != NULL && iKeepGoing == 1)
+                {
+                    if (elementCurrent->r == r && elementCurrent->g == g && elementCurrent->b == b)
+                    {
+                        iKeepGoing = 0;
+                        elementCurrent->repetitions += 1;
+                    }
+                    else
+                    {
+                        elementPrevious = elementCurrent;
+                        elementCurrent = elementCurrent->next;
+                    }
+                }
+                if (iKeepGoing == 1)
+                {
+                    Element *element = malloc(sizeof(*element));
+                    if (element == NULL)
+                    {
+                        exit(EXIT_FAILURE);
+                    }
+                    element->r = r;
+                    element->g = g;
+                    element->b = b;
+                    element->repetitions = 1;
+                    element->next = NULL;
+                    element->previous = list->last;
+
+                    list->last->next = element;
+                    list->last = element;
+                    list->size += 1;
+                }
+            }
+        }
+    }
+    else{
+        if (list->size == 0)
+        {
+            list->first->r = r;
+            list->first->g = g;
+            list->first->b = b;
+            list->first->repetitions = 0;
+            list->size += 1;
+        }
+        else
+        {
+            Element *element = malloc(sizeof(*element));
+            if (element == NULL)
+            {
+                exit(EXIT_FAILURE);
+            }
+            element->r = r;
+            element->g = g;
+            element->b = b;
+            element->repetitions = 0;
+            element->next = NULL;
+            element->previous = list->last;
+
+            list->last->next = element;
+            list->last = element;
+            list->size += 1;
         }
     }
 }

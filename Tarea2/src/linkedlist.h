@@ -31,7 +31,7 @@ typedef struct LinkedList
 LinkedList *list_init();
 void list_alloc_test(LinkedList *list);
 void list_destroy(LinkedList *linkedlist);
-void list_add(LinkedList *linkedlist, UCHAR r, UCHAR g, UCHAR b);
+void list_add(LinkedList *linkedlist, UCHAR r, UCHAR g, UCHAR b, int sep);
 void list_del(LinkedList *linkedlist, UCHAR r, UCHAR g, UCHAR b);
 Element *list_get(LinkedList *linkedlist, int iPosition);
 void list_print(LinkedList *linkedlist);
