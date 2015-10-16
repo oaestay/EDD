@@ -5,7 +5,7 @@
 // @param bit = 0 - 7
 int get_bit(unsigned char c, int n)
 {
-    return (c >> n) & 1;
+    return (b & (1 << n-1)) != 0;
 }
 Dictionary *LeerHeader(const char *path,int *width,int *height)
 {
@@ -13,26 +13,46 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   int size;
   int filesize;
   int seplength;
+  int j;
+  unsigned char leido;
   Dictionary *dict;
   FILE *file;
   file=fopen(path, "rb");
   fseek(file, 0, SEEK_END); // seek to end of file
   filesize = ftell(file); // get current file pointer
   fseek(file, 0, SEEK_SET);
-  unsigned char bytes [filesize];
+  char concatenacion [filesize*8-15];
+  unsigned char bytes [15];
 
   for(i=0;i<filesize;i++)
   {
-      bytes[i]=fgetc(file);
-    }
 
+      if i<15
+      {
+        bytes[i]=fgetc(file);
+      }
+      else
+      {
+        leido = fgetc(file);
+        for (j=0;j<8;j++)
+        {
+          if get_bit(leido,8-j)
+          {
+            concatenacion[i*8+j] = '1';
+          }
+          else
+          {
+            concatenacion[i*8+j] = '0';
+          }
+        }
+      }
   }
-
-
   *width = (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | (bytes[3]);
   *height = (bytes[4] << 24) | (bytes[5] << 16) | (bytes[6] << 8) | (bytes[7]);
-  size = (bytes[8] << 16) | (bytes[9] << 8) | (bytes[10] << 8);
-  seplength = (bytes[11] << 16) | (bytes[12] << 8) | (bytes[13] << 8);
+  size = (bytes[8] << 16) | (bytes[9] << 8) | (bytes[10] );
+  seplength = (bytes[11] << 16) | (bytes[12] << 8) | (bytes[13]);
+
+
 
   //*height = *bytes[4]+*bytes[5]*256+*bytes[6]*256*256+*bytes[7]*256*256*256;
   //size = *bytes[8]+*bytes[9]*256+*bytes[10]*256*256;
