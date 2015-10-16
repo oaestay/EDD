@@ -42,4 +42,9 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
     seplength=seplength+pow(256,i)*((int) leido);
 
   }
+  printf("%d\n",*width);
+  printf("%d\n",*height);
+  fclose(File);
+  return dict;
+
 }
