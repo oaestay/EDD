@@ -78,6 +78,7 @@ void destroy_dictionary(Dictionary *d){
 
 void print_dictionary(Dictionary *d){
     dictionary_alloc_test(d);
+    printf("Separador(%d): %s\n",d->len_sep, d->sep);
     for (int i = 0; i < d->size; i++) {
         print_pixel(d->pixels[i]);
     }

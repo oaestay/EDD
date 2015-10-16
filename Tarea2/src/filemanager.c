@@ -48,7 +48,6 @@ int Compress_BMP(char *input, char *output){
 	FILE *ptr_myfile;
     ptr_myfile = fopen(output,"wb");
     if (!ptr_myfile){
-        printf("Unable to open file!");
         return 1;
     }
     int w = width;
@@ -74,18 +73,82 @@ int Compress_BMP(char *input, char *output){
     p[1] = (w >> 8) & 255;
     p[0] = (w >> 16) & 255;
     fwrite(p, sizeof(char), 3, ptr_myfile);
+    char *sep = malloc(w + 1);
+    strcpy(sep, d->sep);
     int counter = 0;
     char buffer = '\0';
-    for (int i = w - 1; i >= 0 ; i--) {
-        /* code */
+    int color;
+    for (int i = 0; i < w; i++) {
+        if (counter == 8){
+            fwrite(&buffer, sizeof(char), 1, ptr_myfile);
+            counter = 0;
+            buffer = '\0';
+        }
+        if(sep[i] == '0')
+        {
+            buffer = buffer << 1;
+            counter += 1;
+        }
+        else{
+            buffer += 1;
+            buffer = buffer << 1;
+            counter += 1;
+        }
     }
-    p[2] = w & 255;
-    p[1] = (w >> 8) & 255;
-    p[0] = (w >> 16) & 255;
-    fwrite(p, sizeof(char), 3, ptr_myfile);
-
+    for (int i = 0; i < d->size; i++) {
+        color = d->pixels[i]->color;
+        b =  color & 255;
+        buffer += (b >> counter);
+        fwrite(&buffer, sizeof(char), 1, ptr_myfile);
+        buffer = '\0';
+        buffer += (b << (8 - counter));
+        g =  (color >> 8) & 255;
+        buffer += (g >> counter);
+        fwrite(&buffer, sizeof(char), 1, ptr_myfile);
+        buffer = '\0';
+        buffer += (g << (8 - counter));
+        r =  (color >> 16) & 255;
+        buffer += (r >> counter);
+        fwrite(&buffer, sizeof(char), 1, ptr_myfile);
+        buffer = '\0';
+        buffer += (r << (8 - counter));
+        for (int j = 0; j < strlen(d->pixels[i]->value); j++) {
+            if (counter == 8){
+                fwrite(&buffer, sizeof(char), 1, ptr_myfile);
+                counter = 0;
+                buffer = '\0';
+            }
+            if(d->pixels[i]->value[j] == '0')
+            {
+                buffer = buffer << 1;
+                counter += 1;
+            }
+            else{
+                buffer += 1;
+                buffer = buffer << 1;
+                counter += 1;
+            }
+        }
+        for (int i = 0; i < w; i++) {
+            if (counter == 8){
+                fwrite(&buffer, sizeof(char), 1, ptr_myfile);
+                counter = 0;
+                buffer = '\0';
+            }
+            if(sep[i] == 0)
+            {
+                buffer = buffer << 1;
+                counter += 1;
+            }
+            else{
+                buffer += 1;
+                buffer = buffer << 1;
+                counter += 1;
+            }
+        }
+    }
     fclose(ptr_myfile);
-
+    free(sep);
     //Destroy everything
     destroy_dictionary(d);
     deltree(&arbolito);
