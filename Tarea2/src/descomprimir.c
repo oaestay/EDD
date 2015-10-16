@@ -48,10 +48,16 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
       }
   }
   concatenacion[(filesize-14)*8]='/0';
+
   *width = (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | (bytes[3]);
   *height = (bytes[4] << 24) | (bytes[5] << 16) | (bytes[6] << 8) | (bytes[7]);
   size = (bytes[8] << 16) | (bytes[9] << 8) | (bytes[10] );
   seplength = (bytes[11] << 16) | (bytes[12] << 8) | (bytes[13]);
+  char separador[seplength+1];
+  char concatenacion1[(filesize-14)*8+1-seplength];
+  memcpy( separador, &concatenacion[0], seplength);
+  memcpy( concatenacion1, &concatenacion[seplength], (filesize-14)*8+1-seplength);
+  separador[seplength] = '\0';
 
 
 
@@ -64,7 +70,8 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   printf("%d\n",*height);
   printf("%d\n",size);
   printf("%d\n",seplength);
-  printf("%s\n",concatenacion);
+  printf("%s\n",separador);
+  printf("%s\n",concatenacion1);
   fclose(file);
   return dict;
 
