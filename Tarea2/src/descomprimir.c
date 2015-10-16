@@ -18,10 +18,9 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   FILE *file;
   file=fopen(path, "rb");
   fseek(file, 0, SEEK_END); // seek to end of file
-  filesize = ftell(f); // get current file pointer
+  filesize = ftell(file); // get current file pointer
   fseek(file, 0, SEEK_SET);
-  unsigned char[filesize] bytes;
-  unsigned char leido;
+  unsigned char bytes [filesize];
   for(i=0;i<filesize;i++)
   {
       bytes[i]=fgetc(file);
