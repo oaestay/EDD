@@ -21,13 +21,13 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   fseek(file, 0, SEEK_END); // seek to end of file
   filesize = ftell(file); // get current file pointer
   fseek(file, 0, SEEK_SET);
-  char concatenacion [(filesize-14)*8];
-  unsigned char bytes [15];
+  char concatenacion [(filesize-14)*8+1];
+  unsigned char bytes [14];
 
   for(i=0;i<filesize;i++)
   {
 
-      if (i<15)
+      if (i<14)
       {
         bytes[i]=fgetc(file);
       }
@@ -38,16 +38,16 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
         {
           if (get_bit(leido,8-j))
           {
-            concatenacion[(i-15)*8+j] = '1';
+            concatenacion[(i-14)*8+j] = '1';
           }
           else
           {
-            concatenacion[(i-15)*8+j] = '0';
+            concatenacion[(i-14)*8+j] = '0';
           }
         }
       }
   }
-  concatenacion[filesize*8-13]='/0';
+  concatenacion[(filesize-14)*8]='/0';
   *width = (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | (bytes[3]);
   *height = (bytes[4] << 24) | (bytes[5] << 16) | (bytes[6] << 8) | (bytes[7]);
   size = (bytes[8] << 16) | (bytes[9] << 8) | (bytes[10] );
