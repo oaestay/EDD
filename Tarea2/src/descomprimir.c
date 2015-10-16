@@ -3,7 +3,11 @@
 #include "qdbmp.h"
 #include "binarytree.h"
 #include <math.h>
-
+// @param bit = 0 - 7
+int get_bit(unsigned char c, int n)
+{
+    return (c >> n) & 1;
+}
 Dictionary *LeerHeader(const char *path,int *width,int *height)
 {
   int i;
