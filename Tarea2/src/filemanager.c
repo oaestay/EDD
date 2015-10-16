@@ -42,6 +42,8 @@ int Compress_BMP(char *input, char *output){
     //Recursively saving the paths with the colors in the dictionary
     savePath(d ,&arbolito, "");
 
+    print_dictionary(d);
+
     //Writting the binary file
 	FILE *ptr_myfile;
     ptr_myfile = fopen(output,"wb");
@@ -67,6 +69,21 @@ int Compress_BMP(char *input, char *output){
     p[1] = (w >> 8) & 255;
     p[0] = (w >> 16) & 255;
     fwrite(p, sizeof(char), 3, ptr_myfile);
+    w = d->len_sep;
+    p[2] = w & 255;
+    p[1] = (w >> 8) & 255;
+    p[0] = (w >> 16) & 255;
+    fwrite(p, sizeof(char), 3, ptr_myfile);
+    int counter = 0;
+    char buffer = '\0';
+    for (int i = w - 1; i >= 0 ; i--) {
+        /* code */
+    }
+    p[2] = w & 255;
+    p[1] = (w >> 8) & 255;
+    p[0] = (w >> 16) & 255;
+    fwrite(p, sizeof(char), 3, ptr_myfile);
+
     fclose(ptr_myfile);
 
     //Destroy everything

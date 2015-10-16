@@ -3,6 +3,8 @@
 typedef struct Dictionary {
     int size;
     Pixel **pixels;
+    int len_sep;
+    char *sep;
 }Dictionary;
 
 void dictionary_alloc_test(Dictionary *d);
