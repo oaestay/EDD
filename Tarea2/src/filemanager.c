@@ -79,7 +79,10 @@ int Compress_BMP(char *input, char *output){
     char buffer = '\0';
     int color;
     for (int i = 0; i < w; i++) {
-        if (counter == 8){
+        if (counter == 7){
+            if(sep[i] == '1'){
+                buffer += 1;
+            }
             fwrite(&buffer, sizeof(char), 1, ptr_myfile);
             counter = 0;
             buffer = '\0';
@@ -98,22 +101,27 @@ int Compress_BMP(char *input, char *output){
     for (int i = 0; i < d->size; i++) {
         color = d->pixels[i]->color;
         b =  color & 255;
-        buffer += (b >> counter);
-        fwrite(&buffer, sizeof(char), 1, ptr_myfile);
-        buffer = '\0';
-        buffer += (b << (8 - counter));
         g =  (color >> 8) & 255;
-        buffer += (g >> counter);
-        fwrite(&buffer, sizeof(char), 1, ptr_myfile);
-        buffer = '\0';
-        buffer += (g << (8 - counter));
         r =  (color >> 16) & 255;
+        buffer = buffer << (7 - counter);
         buffer += (r >> counter);
         fwrite(&buffer, sizeof(char), 1, ptr_myfile);
         buffer = '\0';
         buffer += (r << (8 - counter));
+        buffer += (g >> counter);
+        fwrite(&buffer, sizeof(char), 1, ptr_myfile);
+        buffer = '\0';
+        buffer += (g << (8 - counter));
+        buffer += (b >> counter);
+        fwrite(&buffer, sizeof(char), 1, ptr_myfile);
+        buffer = '\0';
+        buffer += (b << (8 - counter));
+        buffer = buffer >> (7 - counter);
         for (int j = 0; j < strlen(d->pixels[i]->value); j++) {
-            if (counter == 8){
+            if (counter == 7){
+                if(d->pixels[i]->value[j] == '1'){
+                    buffer += 1;
+                }
                 fwrite(&buffer, sizeof(char), 1, ptr_myfile);
                 counter = 0;
                 buffer = '\0';
@@ -130,12 +138,15 @@ int Compress_BMP(char *input, char *output){
             }
         }
         for (int i = 0; i < w; i++) {
-            if (counter == 8){
+            if (counter == 7){
+                if(sep[i] == '1'){
+                    buffer += 1;
+                }
                 fwrite(&buffer, sizeof(char), 1, ptr_myfile);
                 counter = 0;
                 buffer = '\0';
             }
-            if(sep[i] == 0)
+            if(sep[i] == '0')
             {
                 buffer = buffer << 1;
                 counter += 1;
@@ -146,6 +157,9 @@ int Compress_BMP(char *input, char *output){
                 counter += 1;
             }
         }
+    }
+    if (counter > 0){
+        fwrite(&buffer, sizeof(char), 1, ptr_myfile);
     }
     fclose(ptr_myfile);
     free(sep);
