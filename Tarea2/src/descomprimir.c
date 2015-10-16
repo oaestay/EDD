@@ -12,39 +12,33 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
 {
   int i;
   int size;
-  int seplenght;
-  Dictonary *dict;
-  File *file;
-  File=fopen(path, "rb");
+  int filesize;
+  int seplength;
+  Dictionary *dict;
+  FILE *file;
+  file=fopen(path, "rb");
+  fseek(file, 0, SEEK_END); // seek to end of file
+  filesize = ftell(f); // get current file pointer
+  fseek(file, 0, SEEK_SET);
+  unsigned char[filesize] bytes;
   unsigned char leido;
-  for(i=0; i<4; i++)
+  for(i=0;i<filesize;i++)
   {
-    leido=fgetc(File);
-    *width=*width+pow(256,i)*((int) leido);
+      bytes[i]=fgetc(file);
+    }
 
   }
-  for(i=0; i<4; i++)
-  {
-    leido=fgetc(File);
-    *height=*height+pow(256,i)*((int) leido);
-
-  }
-  for(i=0; i<3; i++)
-  {
-    leido=fgetc(File);
-    size=size+pow(256,i)*((int) leido);
-
-  }
+  *width = *bytes[0]+*bytes[1]*256+*bytes[2]*256*256+*bytes[3]*256*256*256;
+  *height = *bytes[4]+*bytes[5]*256+*bytes[6]*256*256+*bytes[7]*256*256*256;
+  size = *bytes[8]+*bytes[9]*256+*bytes[10]*256*256;
   dict = init_dictionary(size);
-  for(i=0; i<3; i++)
-  {
-    leido=fgetc(File);
-    seplength=seplength+pow(256,i)*((int) leido);
+  seplength = *bytes[11]+*bytes[12]*256+*bytes[13]*256*256;
 
-  }
   printf("%d\n",*width);
   printf("%d\n",*height);
-  fclose(File);
+  printf("%d\n",size);
+  printf("%d\n",seplength);
+  fclose(file);
   return dict;
 
 }
