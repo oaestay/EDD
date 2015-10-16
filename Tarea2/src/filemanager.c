@@ -50,9 +50,23 @@ int Compress_BMP(char *input, char *output){
         return 1;
     }
     int w = width;
-    int h = height;
-    fwrite(&w, sizeof(int), 1, ptr_myfile);
-    fwrite(&h, sizeof(int), 1, ptr_myfile);
+    char p[4];
+    p[3] = w & 255;
+    p[2] = (w >> 8) & 255;
+    p[1] = (w >> 16) & 255;
+    p[0] = (w >> 24) & 255;
+    fwrite(p, sizeof(char), 4, ptr_myfile);
+    w = height;
+    p[3] = w & 255;
+    p[2] = (w >> 8) & 255;
+    p[1] = (w >> 16) & 255;
+    p[0] = (w >> 24) & 255;
+    fwrite(p, sizeof(char), 4, ptr_myfile);
+    w = list->size - 1;
+    p[2] = w & 255;
+    p[1] = (w >> 8) & 255;
+    p[0] = (w >> 16) & 255;
+    fwrite(p, sizeof(char), 3, ptr_myfile);
     fclose(ptr_myfile);
 
     //Destroy everything
