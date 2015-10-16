@@ -32,6 +32,7 @@ OBJS = \
 ./$(OBJS_DIR)/linkedlist.o \
 ./$(OBJS_DIR)/binarytree.o \
 ./$(OBJS_DIR)/dictionary.o \
+./$(OBJS_DIR)/pixel.o \
 ./$(OBJS_DIR)/qdbmp.o \
 
 # CREATE OBJ

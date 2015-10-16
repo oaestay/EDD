@@ -1,8 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
 #include "binarytree.h"
-#include <string.h>
 
 node initNode(int size) {
     node nd ;

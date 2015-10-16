@@ -4,8 +4,6 @@
     Author: Robin Thomas <robinthomas2591@gmail.com>
 */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
 #include "linkedlist.h"
 

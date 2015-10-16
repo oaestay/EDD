@@ -6,8 +6,6 @@
 //
 //##############################################################################
 
-#include <stdio.h>
-#include "linkedlist.h"
 #include "binarytree.h"
 
 int main(int argc, char const *argv[]) {
@@ -40,12 +38,11 @@ int main(int argc, char const *argv[]) {
     buildMinHeap(&heap, list);
     inorderTraversal(&heap, 0);
     arbolito=*Createtree(&heap);
-    list_print(list);
-    printf("-----\n");
-    char *str = "";
     Dictionary *d = init_dictionary(list->size);
-    savePath(d ,&arbolito, str);
+    savePath(d ,&arbolito, "");
     print_dictionary(d);
+    BMP_GetPixelRGB(bmp, 50, 30, &r, &g, &b);
+    printf("%s\n", get_dictionary( d, r, g, b));
     destroy_dictionary(d);
     deltree(&arbolito);
     BMP_Free(bmp);
