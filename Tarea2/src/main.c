@@ -35,7 +35,7 @@ int main(int argc, char const *argv[]) {
         }
     }
 
-    list_add(list,NULL,NULL,NULL,1);
+    list_add(list,0,0,0,1);
     heap = initMinHeap(list->size);
     buildMinHeap(&heap, list);
     inorderTraversal(&heap, 0);
