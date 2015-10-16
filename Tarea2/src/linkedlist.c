@@ -49,21 +49,18 @@ void list_destroy(LinkedList *list)
     free(list);
 }
 
-void list_add(LinkedList *list, UCHAR r, UCHAR g, UCHAR b,int sep)
+void list_add(LinkedList *list, UCHAR r, UCHAR g, UCHAR b)
 {
     list_alloc_test(list);
 
     Element *elementCurrent, *elementPrevious;
 
-    if (list->size == 0 )
+    if (list->size == 0)
     {
         list->first->r = r;
         list->first->g = g;
         list->first->b = b;
-        if (!sep)
-        {
-          list->first->repetitions = 1;
-        }
+        list->first->repetitions = 1;
         list->size += 1;
     }
     else if (list->size == 1)
@@ -71,16 +68,11 @@ void list_add(LinkedList *list, UCHAR r, UCHAR g, UCHAR b,int sep)
         elementCurrent = list->first;
         if (elementCurrent->r == r && elementCurrent->g == g && elementCurrent->b == b)
         {
-            if(!sep)
-            {
-              elementCurrent->repetitions += 1;
-            }
-
+            elementCurrent->repetitions += 1;
         }
         else
         {
             Element *element = malloc(sizeof(*element));
-            element->repetitions=0;
             if (element == NULL)
             {
                 exit(EXIT_FAILURE);
@@ -88,11 +80,7 @@ void list_add(LinkedList *list, UCHAR r, UCHAR g, UCHAR b,int sep)
             element->r = r;
             element->g = g;
             element->b = b;
-            if (!sep)
-            {
-              element->repetitions = 1;
-            }
-
+            element->repetitions = 1;
             element->next = NULL;
             element->previous = list->last;
 
@@ -108,11 +96,7 @@ void list_add(LinkedList *list, UCHAR r, UCHAR g, UCHAR b,int sep)
 
         if (elementPrevious->r == r && elementPrevious->g == g && elementPrevious->b == b)
         {
-            if(!sep)
-            {
-              elementPrevious->repetitions += 1;
-            }
-
+            elementPrevious->repetitions += 1;
         }
         else
         {
@@ -137,15 +121,10 @@ void list_add(LinkedList *list, UCHAR r, UCHAR g, UCHAR b,int sep)
                 {
                     exit(EXIT_FAILURE);
                 }
-                element->repetitions = 0;
                 element->r = r;
                 element->g = g;
                 element->b = b;
-                if (!sep)
-                {
-                  element->repetitions = 1;
-                }
-
+                element->repetitions = 1;
                 element->next = NULL;
                 element->previous = list->last;
 
