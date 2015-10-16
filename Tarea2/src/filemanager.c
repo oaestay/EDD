@@ -78,6 +78,7 @@ int Compress_BMP(char *input, char *output){
     int counter = 0;
     char buffer = '\0';
     int color;
+    printf("%s\n", sep);
     for (int i = 0; i < w; i++) {
         if (counter == 7){
             if(sep[i] == '1'){
@@ -87,15 +88,17 @@ int Compress_BMP(char *input, char *output){
             counter = 0;
             buffer = '\0';
         }
-        if(sep[i] == '0')
-        {
-            buffer = buffer << 1;
-            counter += 1;
-        }
         else{
-            buffer += 1;
-            buffer = buffer << 1;
-            counter += 1;
+            if(sep[i] == '0')
+            {
+                buffer = buffer << 1;
+                counter += 1;
+            }
+            else{
+                buffer += 1;
+                buffer = buffer << 1;
+                counter += 1;
+            }
         }
     }
     for (int i = 0; i < d->size; i++) {
@@ -103,6 +106,9 @@ int Compress_BMP(char *input, char *output){
         b =  color & 255;
         g =  (color >> 8) & 255;
         r =  (color >> 16) & 255;
+        printf("%d\n", r);
+        printf("%d\n", g);
+        printf("%d\n", b);
         buffer = buffer << (7 - counter);
         buffer += (r >> counter);
         fwrite(&buffer, sizeof(char), 1, ptr_myfile);
@@ -117,6 +123,7 @@ int Compress_BMP(char *input, char *output){
         buffer = '\0';
         buffer += (b << (8 - counter));
         buffer = buffer >> (7 - counter);
+        printf("%s\n", d->pixels[i]->value);
         for (int j = 0; j < strlen(d->pixels[i]->value); j++) {
             if (counter == 7){
                 if(d->pixels[i]->value[j] == '1'){
@@ -126,17 +133,20 @@ int Compress_BMP(char *input, char *output){
                 counter = 0;
                 buffer = '\0';
             }
-            if(d->pixels[i]->value[j] == '0')
-            {
-                buffer = buffer << 1;
-                counter += 1;
-            }
             else{
-                buffer += 1;
-                buffer = buffer << 1;
-                counter += 1;
+                if(d->pixels[i]->value[j] == '0')
+                {
+                    buffer = buffer << 1;
+                    counter += 1;
+                }
+                else{
+                    buffer += 1;
+                    buffer = buffer << 1;
+                    counter += 1;
+                }
             }
         }
+        printf("%s\n", sep);
         for (int i = 0; i < w; i++) {
             if (counter == 7){
                 if(sep[i] == '1'){
@@ -146,15 +156,17 @@ int Compress_BMP(char *input, char *output){
                 counter = 0;
                 buffer = '\0';
             }
-            if(sep[i] == '0')
-            {
-                buffer = buffer << 1;
-                counter += 1;
-            }
             else{
-                buffer += 1;
-                buffer = buffer << 1;
-                counter += 1;
+                if(sep[i] == '0')
+                {
+                    buffer = buffer << 1;
+                    counter += 1;
+                }
+                else{
+                    buffer += 1;
+                    buffer = buffer << 1;
+                    counter += 1;
+                }
             }
         }
     }
