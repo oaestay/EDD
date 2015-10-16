@@ -42,7 +42,19 @@ int Compress_BMP(char *input, char *output){
     //Recursively saving the paths with the colors in the dictionary
     savePath(d ,&arbolito, "");
 
-    print_dictionary(d);
+    //Writting the binary file
+	FILE *ptr_myfile;
+    ptr_myfile = fopen(output,"wb");
+    if (!ptr_myfile){
+        printf("Unable to open file!");
+        return 1;
+    }
+    int w = width;
+    int h = height;
+    fwrite(&w, sizeof(int), 1, ptr_myfile);
+    fwrite(&h, sizeof(int), 1, ptr_myfile);
+    fclose(ptr_myfile);
+
     //Destroy everything
     destroy_dictionary(d);
     deltree(&arbolito);
