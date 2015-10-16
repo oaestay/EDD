@@ -17,37 +17,38 @@ int Compress_BMP(char *input, char *output){
     //Initialize of the List of colors
     LinkedList *list = list_init();
 
-};
-
-
-
-
-
-
-width = BMP_GetWidth( bmp );
-height = BMP_GetHeight( bmp );
-printf("Width: %lu Height:%lu\n",width,height);
-
-for ( x = 0 ; x < width ; ++x )
-{
-    for ( y = 0 ; y < height ; ++y )
+    //Getting the pixels of the image
+    for ( x = 0 ; x < width ; ++x )
     {
-        BMP_GetPixelRGB( bmp, x, y, &r, &g, &b );
-        list_add(list, r, g, b);
+        for ( y = 0 ; y < height ; ++y )
+        {
+            BMP_GetPixelRGB( bmp, x, y, &r, &g, &b );
+            list_add(list, r, g, b, 0);
+        }
     }
-}
-heap = initMinHeap(list->size);
-buildMinHeap(&heap, list);
-inorderTraversal(&heap, 0);
-arbolito=*Createtree(&heap);
-Dictionary *d = init_dictionary(list->size);
-savePath(d ,&arbolito, "");
-print_dictionary(d);
-BMP_GetPixelRGB(bmp, 50, 30, &r, &g, &b);
-printf("r: %x g: %x b: %x \n", r, g, b);
-printf("%s\n", get_dictionary( d, r, g, b));
-destroy_dictionary(d);
-deltree(&arbolito);
-BMP_Free(bmp);
-list_destroy(list);
-deleteMinHeap(&heap);
+    list_add(list,0,0,0,1);
+
+    //Building the heap to order the list
+    heap = initMinHeap(list->size);
+    buildMinHeap(&heap, list);
+    inorderTraversal(&heap, 0);
+
+    //Building the Huffmann tree
+    arbolito=*Createtree(&heap);
+
+    //Creating the dictionary
+    Dictionary *d = init_dictionary(list->size);
+
+    //Recursively saving the paths with the colors in the dictionary
+    savePath(d ,&arbolito, "");
+
+    print_dictionary(d);
+    //Destroy everything
+    destroy_dictionary(d);
+    deltree(&arbolito);
+    BMP_Free(bmp);
+    list_destroy(list);
+    deleteMinHeap(&heap);
+
+    return 0;
+};

@@ -18,21 +18,39 @@ void dictionary_alloc_test(Dictionary *d){
     }
 };
 
-void insert_dictionary(Dictionary *d, UCHAR r, UCHAR g, UCHAR b, char *path)
+void insert_dictionary(Dictionary *d, UCHAR r, UCHAR g, UCHAR b, int repetitions, char *path)
 {
     dictionary_alloc_test(d);
-    int i = rgb_to_int(r, g, b);
-    int alloc = 0;
-    int try = 0;
-    while (alloc == 0){
-        int index = hash(i, d->size, try);
-        if(!strcmp(d->pixels[index]->value, ""))
-        {
-            alloc = 1;
-            assign_pixel(d->pixels[index], i, path);
+    if (repetitions == 0){
+        int i = 16777216;
+        int alloc = 0;
+        int try = 0;
+        while (alloc == 0){
+            int index = hash(i, d->size, try);
+            if(!strcmp(d->pixels[index]->value, ""))
+            {
+                alloc = 1;
+                assign_pixel(d->pixels[index], i, path);
+            }
+            else{
+                try += 1;
+            }
         }
-        else{
-            try += 1;
+    }
+    else{
+        int i = rgb_to_int(r, g, b);
+        int alloc = 0;
+        int try = 0;
+        while (alloc == 0){
+            int index = hash(i, d->size, try);
+            if(!strcmp(d->pixels[index]->value, ""))
+            {
+                alloc = 1;
+                assign_pixel(d->pixels[index], i, path);
+            }
+            else{
+                try += 1;
+            }
         }
     }
 };
@@ -72,7 +90,6 @@ void print_dictionary(Dictionary *d){
         print_pixel(d->pixels[i]);
     }
 }
-
 
 int hash(int color, int size, int try){
     return (color + try)%size;

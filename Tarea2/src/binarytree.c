@@ -90,7 +90,7 @@ node* search(node ** tree, int val)
 }
 void savePath(Dictionary *dict, node *tree, char *code){
     if (!tree->right && !tree->left){
-        insert_dictionary(dict, tree->r, tree->g, tree->b, code);
+        insert_dictionary(dict, tree->r, tree->g, tree->b, tree->repetitions, code);
         //printf("%d %d %d -> %s \n", tree->r, tree->g, tree->b, code);
     }
     else{

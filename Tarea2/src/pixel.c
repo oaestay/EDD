@@ -30,10 +30,15 @@ void destroy_pixel(Pixel *p){
 
 void print_pixel(Pixel *p){
     //int_to_RGB
-    UCHAR b =  p->color & 255;
-    UCHAR g =  (p->color >> 8) & 255;
-    UCHAR r =  (p->color >> 16) & 255;
-    printf("r: %x g: %x b: %x -> %s\n", r, g, b, p->value);
+    if (p->color == 16777216){
+        printf("Separator -> %s\n", p->value);
+    }
+    else{
+        UCHAR b =  p->color & 255;
+        UCHAR g =  (p->color >> 8) & 255;
+        UCHAR r =  (p->color >> 16) & 255;
+        printf("r: %x g: %x b: %x -> %s\n", r, g, b, p->value);
+    }
 };
 
 int rgb_to_int(UCHAR r, UCHAR g, UCHAR b){
