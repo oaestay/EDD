@@ -13,5 +13,6 @@ Pixel *init_pixel();
 void assign_pixel(Pixel *p, int i, char *path);
 void destroy_pixel(Pixel *p);
 void print_pixel(Pixel *p);
+int int_to_rgb(int color);
 
 int rgb_to_int(UCHAR r, UCHAR g, UCHAR b);
