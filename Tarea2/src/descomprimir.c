@@ -21,7 +21,7 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   fseek(file, 0, SEEK_END); // seek to end of file
   filesize = ftell(file); // get current file pointer
   fseek(file, 0, SEEK_SET);
-  char concatenacion [filesize*8-14];
+  char concatenacion [(filesize-14)*8];
   unsigned char bytes [15];
 
   for(i=0;i<filesize;i++)
