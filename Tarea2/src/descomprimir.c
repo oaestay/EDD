@@ -5,7 +5,7 @@
 // @param bit = 0 - 7
 int get_bit(unsigned char c, int n)
 {
-    return (c & (1 << (n))) != 0;
+    return (c & (1 << (n-1))) != 0;
 }
 Dictionary *LeerHeader(const char *path,int *width,int *height)
 {
