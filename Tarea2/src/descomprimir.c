@@ -7,10 +7,10 @@ int get_bit(unsigned char c, int n)
 {
     return (c & (1 << (n-1))) != 0;
 }
-char * Codification(char *palabra, char *delimiter)
+void Codification(char *palabra, char *delimiter, char *returneado)
 {
   char *sepi = strstr(palabra,delimiter);
-  char *returneado;
+
   for (int i=0;i<strlen(palabra);i++)
   {
     if (sepi != &(palabra[i]))
@@ -18,7 +18,7 @@ char * Codification(char *palabra, char *delimiter)
       returneado[i] = palabra[i];
     }
   }
-  return returneado;
+  return;
 }
 unsigned char Stringuchar(char *color)
 {
@@ -49,7 +49,7 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   char red [9];
   char green [9];
   char blue [9];
-  char *codificacion;
+
   unsigned char leido;
   Dictionary *dict;
   FILE *file;
@@ -58,6 +58,7 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   filesize = ftell(file); // get current file pointer
   fseek(file, 0, SEEK_SET);
   char concatenacion [(filesize-14)*8+1];
+  char codificacion[(filesize-14)*8+1];
   unsigned char bytes [14];
 
   for(i=0;i<filesize;i++)
@@ -102,30 +103,63 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
 
 
 
-
+  int w=0;
+  int v=0;
+  int contador=0;
+  int t=0;
   for (k=0;k<size;k++)
   {
 
-    memcpy(red, &concatenacion1[0], 8);
+    memcpy(red, &concatenacion1[0+w], 8);
     red[8]='\0';
-    memcpy(green, &concatenacion1[8], 8);
+    memcpy(green, &concatenacion1[8+w], 8);
     green[8]='\0';
-    memcpy(blue, &concatenacion1[16], 8);
+    memcpy(blue, &concatenacion1[16+w], 8);
     blue[8]='\0';
-
+    w = w +24;
+    //printf("%d\n",w);
     r = Stringuchar(red);
     g = Stringuchar(green);
     b = Stringuchar(blue);
+    for (i = w;i< strlen(concatenacion1);i++)
+    {
+        for (v=0;v<seplength;v++)
+        {
+            //printf("%d\n",i);
+            if (concatenacion1[v+i] != separador[v])
+		{
+                  contador = 0;
+                  break;
+		}
+            else
+		{
+	          contador = contador+1;
+		}
+        }
+        if (contador == seplength)
+	{
+           //printf("%d\n",contador);
+           contador = 0 ;
 
-    //memcpy( concatenaciontemp, &concatenacion1[24], strlen(concatenacion1)-24);
+	   for (t=w;t<i;t++)
+	   {
 
-    //memcpy( concatenacion1, &concatenaciontemp[0], strlen(concatenaciontemp));
-    codificacion=Codification(concatenacion1, separador);
+               codificacion[t-w] = concatenacion1 [t];
+           }
+	   break;
+	}
+    }
+    codificacion[t-w+1]='\0';
+    w = v+i;
+
+    printf("%s\n",codificacion);
 
 
 
-    insert_dictionary(dict, r, g, b, 60, codificacion);
-    break;
+
+    insert_dictionary(dict, r, g, b, 6, codificacion);
+
+
 
   }
 
