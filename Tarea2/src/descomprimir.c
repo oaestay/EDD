@@ -7,6 +7,19 @@ int get_bit(unsigned char c, int n)
 {
     return (c & (1 << (n-1))) != 0;
 }
+char * Codification(char *palabra, char *delimiter)
+{
+  char *sepi = strstr(palabra,delimiter);
+  char *returneado;
+  for (int i=0;i<strlen(palabra);i++)
+  {
+    if (sepi != &(palabra[i]))
+    {
+      returneado[i] = palabra[i];
+    }
+  }
+  return returneado;
+}
 unsigned char Stringuchar(char *color)
 {
   unsigned char temp;
@@ -18,8 +31,9 @@ unsigned char Stringuchar(char *color)
       temp = 1 << 0;
       acumulado = acumulado | temp;
     }
-    acumulado << 1;
+    acumulado = acumulado << 1;
   }
+  return acumulado;
 }
 Dictionary *LeerHeader(const char *path,int *width,int *height)
 {
@@ -77,7 +91,7 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   seplength = (bytes[11] << 16) | (bytes[12] << 8) | (bytes[13]);
   char separador[seplength+1];
   char concatenacion1[(filesize-14)*8+1-seplength];
-  char *concatenaciontemp;
+  char concatenaciontemp[(filesize-14)*8+1-seplength];
   memcpy( separador, &concatenacion[0], seplength);
   memcpy( concatenacion1, &concatenacion[seplength], (filesize-14)*8+1-seplength);
   separador[seplength] = '\0';
@@ -86,44 +100,35 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
 
 
 
-  char *token;
-  char line[] = "SEVERAL WORDS";
-  char *search = " ";
-
-
-  // Token will point to "SEVERAL".
-  token = strtok(line, search);
-
-
-  // Token will point to "WORDS".
-  token = strtok(NULL, search);
 
 
 
-
-
-  while(1)
+  for (k=0;k<size;k++)
   {
-    if (strlen(concatenacion1)<24)
-    {
-      break;
-    }
+
     memcpy(red, &concatenacion1[0], 8);
     red[8]='\0';
     memcpy(green, &concatenacion1[8], 8);
     green[8]='\0';
     memcpy(blue, &concatenacion1[16], 8);
     blue[8]='\0';
-    r = Stringuchar(char red);
-    g = Stringuchar(char green);
-    b = Stringuchar(char blue);
-    memcpy( concatenaciontemp, &concatenacion1[24], strlen(concatenacion1)-24);
-    memcpy( concatenacion1, &concatenaciontemp[0], strlen(concatenaciontemp));
-    codificacion = strtok(concatenacion1,separador);
+
+    r = Stringuchar(red);
+    g = Stringuchar(green);
+    b = Stringuchar(blue);
+
+    //memcpy( concatenaciontemp, &concatenacion1[24], strlen(concatenacion1)-24);
+
+    //memcpy( concatenacion1, &concatenaciontemp[0], strlen(concatenaciontemp));
+    codificacion=Codification(concatenacion1, separador);
+
+
+
     insert_dictionary(dict, r, g, b, 60, codificacion);
+    break;
 
   }
-  return dict;
+
 
 
   //*height = *bytes[4]+*bytes[5]*256+*bytes[6]*256*256+*bytes[7]*256*256*256;
@@ -136,7 +141,7 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   printf("%d\n",size);
   printf("%d\n",seplength);
   printf("%s\n",separador);
-  printf("%s\n",concatenacion1);
+  //printf("%s\n",concatenacion1);
   fclose(file);
   return dict;
 
