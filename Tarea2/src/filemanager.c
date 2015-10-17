@@ -384,6 +384,7 @@ void LeerHeader(const char *path,int *width,int *height)
   {
 
   }
+  destroy_dictionary(dict);
   free(codificacion);
 
 }
