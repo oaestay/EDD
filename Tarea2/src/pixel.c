@@ -40,11 +40,13 @@ void print_pixel(Pixel *p){
         printf("r: %x g: %x b: %x -> %s\n", r, g, b, p->value);
     }
 };
-int int_to_rgb(int color)
+void int_to_rgb(int color, UCHAR *b, UCHAR *g, UCHAR *r)
 {
-  UCHAR b =  color & 255;
-  UCHAR g =  (color >> 8) & 255;
-  UCHAR r =  (color >> 16) & 255;
+  *b =  color & 255;
+  *g =  (color >> 8) & 255;
+  *r =  (color >> 16) & 255;
+  return;
+
 }
 int rgb_to_int(UCHAR r, UCHAR g, UCHAR b){
     int sum = 0;

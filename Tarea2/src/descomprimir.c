@@ -14,6 +14,9 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   int filesize;
   int seplength;
   int j;
+  UCHAR r;
+  UCHAR g;
+  UCHAR b;
   unsigned char leido;
   Dictionary *dict;
   FILE *file;
@@ -58,7 +61,10 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   memcpy( separador, &concatenacion[0], seplength);
   memcpy( concatenacion1, &concatenacion[seplength], (filesize-14)*8+1-seplength);
   separador[seplength] = '\0';
+  while(1)
+  {
 
+  }
 
 
   //*height = *bytes[4]+*bytes[5]*256+*bytes[6]*256*256+*bytes[7]*256*256*256;
