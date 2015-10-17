@@ -177,6 +177,10 @@ void LeerHeader(const char *path,int *width,int *height)
   printf("%s\n",separador);
   //printf("%s\n",concatenacion1);
   fclose(file);
+  for(i = w ; i<strlen(concatenacion1); i++)
+  {
 
+  }
+  free(codificacion);
 
 }

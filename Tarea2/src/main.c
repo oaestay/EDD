@@ -20,6 +20,11 @@ int main(int argc, char *argv[]) {
     if(!strcmp(argv[1], "0")){
         Compress_BMP(argv[2], argv[3]);
     }
+    if(!strcmp(argv[1], "1")){
+        int a = 0;
+        int b = 0;
+        LeerHeader(argv[2], &a, &b);
+    }
 
     return 0;
 }
