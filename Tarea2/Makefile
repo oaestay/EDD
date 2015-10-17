@@ -28,7 +28,6 @@ OBJS_DIR = obj
 # OBJECTS LIST
 OBJS = \
 ./$(OBJS_DIR)/main.o \
-./$(OBJS_DIR)/descomprimir.o \
 ./$(OBJS_DIR)/filemanager.o \
 ./$(OBJS_DIR)/minheap.o \
 ./$(OBJS_DIR)/linkedlist.o \
