@@ -1,11 +1,3 @@
-//##############################################################################
-//
-//                                  Tarea 2
-//
-//                       Oscar Estay   -   Bastian Mavrakis
-//
-//##############################################################################
-
 #include "pixel.h"
 
 void pixel_test(Pixel *p){
@@ -28,6 +20,7 @@ void assign_pixel(Pixel *p, int i, char *path){
     p->color = i;
     p->value = malloc(strlen(path) + 1);
     strcpy(p->value, path);
+
 };
 
 void destroy_pixel(Pixel *p){

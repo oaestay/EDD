@@ -35,7 +35,7 @@ unsigned char Stringuchar(char *color)
   }
   return acumulado;
 }
-Dictionary *LeerHeader(const char *path,int *width,int *height)
+void LeerHeader(const char *path,int *width,int *height)
 {
   int i;
   int size;
@@ -96,7 +96,7 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   memcpy( separador, &concatenacion[0], seplength);
   memcpy( concatenacion1, &concatenacion[seplength], (filesize-14)*8+1-seplength);
   separador[seplength] = '\0';
-  dict = init_dictionary(size);
+  dict = init_dictionary(size+1);
 
 
 
@@ -177,6 +177,6 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   printf("%s\n",separador);
   //printf("%s\n",concatenacion1);
   fclose(file);
-  return dict;
+
 
 }
