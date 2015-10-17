@@ -45,25 +45,41 @@ int Compress_BMP(char *input, char *output){
     print_dictionary(d);
 
     //Writting the binary file
-	FILE *ptr_myfile;
+    Write_binary(output, d, bmp);
+
+    //Destroy everything
+    destroy_dictionary(d);
+    deltree(&arbolito);
+    BMP_Free(bmp);
+    list_destroy(list);
+    deleteMinHeap(&heap);
+
+    return 0;
+};
+
+void Write_binary(char *output, Dictionary *d, BMP *bmp){
+    FILE *ptr_myfile;
+    UCHAR r, g, b;
+    UINT x, y;
+    char *path;
     ptr_myfile = fopen(output,"wb");
     if (!ptr_myfile){
-        return 1;
+        EXIT_FAILURE;
     }
-    int w = width;
+    int wi = BMP_GetWidth(bmp);
     char p[4];
-    p[3] = w & 255;
-    p[2] = (w >> 8) & 255;
-    p[1] = (w >> 16) & 255;
-    p[0] = (w >> 24) & 255;
+    p[3] = wi & 255;
+    p[2] = (wi >> 8) & 255;
+    p[1] = (wi >> 16) & 255;
+    p[0] = (wi >> 24) & 255;
     fwrite(p, sizeof(char), 4, ptr_myfile);
-    w = height;
-    p[3] = w & 255;
-    p[2] = (w >> 8) & 255;
-    p[1] = (w >> 16) & 255;
-    p[0] = (w >> 24) & 255;
+    int he = BMP_GetHeight(bmp);
+    p[3] = he & 255;
+    p[2] = (he >> 8) & 255;
+    p[1] = (he >> 16) & 255;
+    p[0] = (he >> 24) & 255;
     fwrite(p, sizeof(char), 4, ptr_myfile);
-    w = list->size - 1;
+    int w = d->size;
     p[2] = w & 255;
     p[1] = (w >> 8) & 255;
     p[0] = (w >> 16) & 255;
@@ -170,17 +186,40 @@ int Compress_BMP(char *input, char *output){
             }
         }
     }
+    for ( x = 0 ; x < wi ; ++x )
+    {
+        for ( y = 0 ; y < he ; ++y )
+        {
+            BMP_GetPixelRGB( bmp, x, y, &r, &g, &b );
+            //int color = rgb_to_int(r, g, b);
+            path = get_dictionary(d, r, g, b);
+            for (int j = 0; j < strlen(path); j++) {
+                if (counter == 7){
+                    if(path[j] == '1'){
+                        buffer += 1;
+                    }
+                    fwrite(&buffer, sizeof(char), 1, ptr_myfile);
+                    counter = 0;
+                    buffer = '\0';
+                }
+                else{
+                    if(path[j] == '0')
+                    {
+                        buffer = buffer << 1;
+                        counter += 1;
+                    }
+                    else{
+                        buffer += 1;
+                        buffer = buffer << 1;
+                        counter += 1;
+                    }
+                }
+            }
+        }
+    }
     if (counter > 0){
         fwrite(&buffer, sizeof(char), 1, ptr_myfile);
     }
     fclose(ptr_myfile);
     free(sep);
-    //Destroy everything
-    destroy_dictionary(d);
-    deltree(&arbolito);
-    BMP_Free(bmp);
-    list_destroy(list);
-    deleteMinHeap(&heap);
-
-    return 0;
-};
+}
