@@ -230,7 +230,7 @@ int get_bit(unsigned char c, int n)
 unsigned char Stringuchar(char *color)
 {
   unsigned char temp;
-  unsigned char acumulado;
+  unsigned char acumulado=0;
   for(int i=0;i<8;i++)
   {
     if (color[i]=='1')
@@ -299,7 +299,6 @@ void LeerHeader(const char *path,int *width,int *height)
   seplength = (bytes[11] << 16) | (bytes[12] << 8) | (bytes[13]);
   char separador[seplength+1];
   char concatenacion1[(filesize-14)*8+1-seplength];
-  char concatenaciontemp[(filesize-14)*8+1-seplength];
   memcpy( separador, &concatenacion[0], seplength);
   memcpy( concatenacion1, &concatenacion[seplength], (filesize-14)*8+1-seplength);
   separador[seplength] = '\0';
