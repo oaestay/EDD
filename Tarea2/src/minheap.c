@@ -1,8 +1,10 @@
-/*
-    File:   minHeap.c
-    Desc:   Program showing various operations on a binary min heap
-    Author: Robin Thomas <robinthomas2591@gmail.com>
-*/
+//##############################################################################
+//
+//                                  Tarea 2
+//
+//                       Oscar Estay   -   Bastian Mavrakis
+//
+//##############################################################################
 
 #include <string.h>
 #include "minheap.h"
