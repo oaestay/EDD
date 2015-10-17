@@ -7,6 +7,20 @@ int get_bit(unsigned char c, int n)
 {
     return (c & (1 << (n-1))) != 0;
 }
+unsigned char Stringuchar(char *color)
+{
+  unsigned char temp;
+  unsigned char acumulado;
+  for(int i=0;i<8;i++)
+  {
+    if (color[i]=='1')
+    {
+      temp = 1 << 0;
+      acumulado = acumulado | temp;
+    }
+    acumulado << 1;
+  }
+}
 Dictionary *LeerHeader(const char *path,int *width,int *height)
 {
   int i;
@@ -14,9 +28,14 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   int filesize;
   int seplength;
   int j;
+  int k;
   UCHAR r;
   UCHAR g;
   UCHAR b;
+  char red [9];
+  char green [9];
+  char blue [9];
+  char *codificacion;
   unsigned char leido;
   Dictionary *dict;
   FILE *file;
@@ -58,18 +77,58 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   seplength = (bytes[11] << 16) | (bytes[12] << 8) | (bytes[13]);
   char separador[seplength+1];
   char concatenacion1[(filesize-14)*8+1-seplength];
+  char *concatenaciontemp;
   memcpy( separador, &concatenacion[0], seplength);
   memcpy( concatenacion1, &concatenacion[seplength], (filesize-14)*8+1-seplength);
   separador[seplength] = '\0';
+  dict = init_dictionary(size);
+
+
+
+
+  char *token;
+  char line[] = "SEVERAL WORDS";
+  char *search = " ";
+
+
+  // Token will point to "SEVERAL".
+  token = strtok(line, search);
+
+
+  // Token will point to "WORDS".
+  token = strtok(NULL, search);
+
+
+
+
+
   while(1)
   {
+    if (strlen(concatenacion1)<24)
+    {
+      break;
+    }
+    memcpy(red, &concatenacion1[0], 8);
+    red[8]='\0';
+    memcpy(green, &concatenacion1[8], 8);
+    green[8]='\0';
+    memcpy(blue, &concatenacion1[16], 8);
+    blue[8]='\0';
+    r = Stringuchar(char red);
+    g = Stringuchar(char green);
+    b = Stringuchar(char blue);
+    memcpy( concatenaciontemp, &concatenacion1[24], strlen(concatenacion1)-24);
+    memcpy( concatenacion1, &concatenaciontemp[0], strlen(concatenaciontemp));
+    codificacion = strtok(concatenacion1,separador);
+    insert_dictionary(dict, r, g, b, 60, codificacion);
 
   }
+  return dict;
 
 
   //*height = *bytes[4]+*bytes[5]*256+*bytes[6]*256*256+*bytes[7]*256*256*256;
   //size = *bytes[8]+*bytes[9]*256+*bytes[10]*256*256;
-  //dict = init_dictionary(size);
+
   //seplength = *bytes[11]+*bytes[12]*256+*bytes[13]*256*256;
 
   printf("%d\n",*width);
