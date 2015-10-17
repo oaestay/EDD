@@ -1,97 +1,182 @@
-//##############################################################################
-//
-//                                  Tarea 2
-//
-//                       Oscar Estay   -   Bastian Mavrakis
-//
-//##############################################################################
-
-#include "dictionary.h"
-
-Dictionary *init_dictionary(int size){
-    Dictionary *dictionary = malloc(sizeof(*dictionary));
-    dictionary_alloc_test(dictionary);
-    dictionary->size = size - 1;
-    dictionary->pixels = malloc(sizeof(Pixel*) * dictionary->size);
-    for (int i = 0; i < size - 1; i++) {
-        dictionary->pixels[i] = init_pixel();
-    }
-    dictionary->len_sep = 0;
-    dictionary->sep = "";
-    return(dictionary);
-};
-
-void dictionary_alloc_test(Dictionary *d){
-    if (d == NULL)
-    {
-        exit(EXIT_FAILURE);
-    }
-};
-
-void insert_dictionary(Dictionary *d, UCHAR r, UCHAR g, UCHAR b, int repetitions, char *path)
+#include <stdio.h>
+#include <stdlib.h>
+#include "qdbmp.h"
+#include "binarytree.h"
+// @param bit = 0 - 7
+int get_bit(unsigned char c, int n)
 {
-    dictionary_alloc_test(d);
-    if (repetitions == 0){
-        d->sep = malloc(strlen(path) + 1);
-        strcpy(d->sep, path);
-        d->len_sep = strlen(path);
-    }
-    else{
-        int i = rgb_to_int(r, g, b);
-        int alloc = 0;
-        int try = 0;
-        while (alloc == 0){
-            int index = hash(i, d->size, try);
-            if(!strcmp(d->pixels[index]->value, ""))
-            {
-                alloc = 1;
-                assign_pixel(d->pixels[index], i, path);
-            }
-            else{
-                try += 1;
-            }
-        }
-    }
-};
-
-char *get_dictionary(Dictionary *d, UCHAR r, UCHAR g, UCHAR b)
-{
-    dictionary_alloc_test(d);
-    int i = rgb_to_int(r, g, b);
-    int alloc = 0;
-    int try = 0;
-    while (alloc == 0){
-        int index = hash(i, d->size, try);
-        if(i == d->pixels[index]->color)
-        {
-            alloc = 1;
-            return(d->pixels[index]->value);
-        }
-        else{
-            try += 1;
-        }
-    }
-    return("");
-};
-
-void destroy_dictionary(Dictionary *d){
-    dictionary_alloc_test(d);
-    for (int i = 0; i < d->size; i++) {
-        destroy_pixel(d->pixels[i]);
-    }
-    free(d->pixels);
-    free(d->sep);
-    free(d);
-};
-
-void print_dictionary(Dictionary *d){
-    dictionary_alloc_test(d);
-    printf("Separador(%d): %s\n",d->len_sep, d->sep);
-    for (int i = 0; i < d->size; i++) {
-        print_pixel(d->pixels[i]);
-    }
+    return (c & (1 << (n-1))) != 0;
 }
+void Codification(char *palabra, char *delimiter, char *returneado)
+{
+  char *sepi = strstr(palabra,delimiter);
 
-int hash(int color, int size, int try){
-    return (color + try)%size;
-};
+  for (int i=0;i<strlen(palabra);i++)
+  {
+    if (sepi != &(palabra[i]))
+    {
+      returneado[i] = palabra[i];
+    }
+  }
+  return;
+}
+unsigned char Stringuchar(char *color)
+{
+  unsigned char temp;
+  unsigned char acumulado;
+  for(int i=0;i<8;i++)
+  {
+    if (color[i]=='1')
+    {
+      temp = 1 << 0;
+      acumulado = acumulado | temp;
+    }
+    acumulado = acumulado << 1;
+  }
+  return acumulado;
+}
+Dictionary *LeerHeader(const char *path,int *width,int *height)
+{
+  int i;
+  int size;
+  int filesize;
+  int seplength;
+  int j;
+  int k;
+  UCHAR r;
+  UCHAR g;
+  UCHAR b;
+  char red [9];
+  char green [9];
+  char blue [9];
+
+  unsigned char leido;
+  Dictionary *dict;
+  FILE *file;
+  file=fopen(path, "rb");
+  fseek(file, 0, SEEK_END); // seek to end of file
+  filesize = ftell(file); // get current file pointer
+  fseek(file, 0, SEEK_SET);
+  char concatenacion [(filesize-14)*8+1];
+  char *codificacion=malloc((filesize-14)*8+1*sizeof(char));
+  unsigned char bytes [14];
+
+  for(i=0;i<filesize;i++)
+  {
+
+      if (i<14)
+      {
+        bytes[i]=fgetc(file);
+      }
+      else
+      {
+        leido = fgetc(file);
+        for (j=0;j<8;j++)
+        {
+          if (get_bit(leido,8-j))
+          {
+            concatenacion[(i-14)*8+j] = '1';
+          }
+          else
+          {
+            concatenacion[(i-14)*8+j] = '0';
+          }
+        }
+      }
+  }
+  concatenacion[(filesize-14)*8]='/0';
+
+  *width = (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | (bytes[3]);
+  *height = (bytes[4] << 24) | (bytes[5] << 16) | (bytes[6] << 8) | (bytes[7]);
+  size = (bytes[8] << 16) | (bytes[9] << 8) | (bytes[10] );
+  seplength = (bytes[11] << 16) | (bytes[12] << 8) | (bytes[13]);
+  char separador[seplength+1];
+  char concatenacion1[(filesize-14)*8+1-seplength];
+  char concatenaciontemp[(filesize-14)*8+1-seplength];
+  memcpy( separador, &concatenacion[0], seplength);
+  memcpy( concatenacion1, &concatenacion[seplength], (filesize-14)*8+1-seplength);
+  separador[seplength] = '\0';
+  dict = init_dictionary(size);
+
+
+
+
+
+
+  int w=0;
+  int v=0;
+  int contador=0;
+  int t=0;
+  for (k=0;k<size;k++)
+  {
+
+    memcpy(red, &concatenacion1[0+w], 8);
+    red[8]='\0';
+    memcpy(green, &concatenacion1[8+w], 8);
+    green[8]='\0';
+    memcpy(blue, &concatenacion1[16+w], 8);
+    blue[8]='\0';
+    w = w +24;
+    //printf("%d\n",w);
+    r = (UCHAR)Stringuchar(red);
+    g = (UCHAR)Stringuchar(green);
+    b = (UCHAR)Stringuchar(blue);
+
+    for (i = w;i< strlen(concatenacion1);i++)
+    {
+        for (v=0;v<seplength;v++)
+        {
+            //printf("%d\n",i);
+            if (concatenacion1[v+i] != separador[v])
+		{
+                  contador = 0;
+                  break;
+		}
+            else
+		{
+	          contador = contador+1;
+		}
+        }
+        if (contador == seplength)
+	{
+           //printf("%d\n",contador);
+           contador = 0 ;
+           codificacion = realloc(codificacion,(i-w)*sizeof(char));
+	   for (t=w;t<i;t++)
+	   {
+
+               codificacion[t-w] = concatenacion1 [t];
+           }
+	   break;
+	}
+    }
+    //codificacion[t-w+1]='\0';
+
+    w = v+i;
+
+    printf("%s\n",codificacion);
+
+
+    insert_dictionary(dict, r, g, b, 6, codificacion);
+
+
+
+  }
+
+
+
+  //*height = *bytes[4]+*bytes[5]*256+*bytes[6]*256*256+*bytes[7]*256*256*256;
+  //size = *bytes[8]+*bytes[9]*256+*bytes[10]*256*256;
+
+  //seplength = *bytes[11]+*bytes[12]*256+*bytes[13]*256*256;
+
+  printf("%d\n",*width);
+  printf("%d\n",*height);
+  printf("%d\n",size);
+  printf("%d\n",seplength);
+  printf("%s\n",separador);
+  //printf("%s\n",concatenacion1);
+  fclose(file);
+  return dict;
+
+}
