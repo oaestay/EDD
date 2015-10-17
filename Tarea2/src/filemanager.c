@@ -122,9 +122,6 @@ void Write_binary(char *output, Dictionary *d, BMP *bmp){
         b =  color & 255;
         g =  (color >> 8) & 255;
         r =  (color >> 16) & 255;
-        printf("%d\n", r);
-        printf("%d\n", g);
-        printf("%d\n", b);
         buffer = buffer << (7 - counter);
         buffer += (r >> counter);
         fwrite(&buffer, sizeof(char), 1, ptr_myfile);
@@ -186,9 +183,9 @@ void Write_binary(char *output, Dictionary *d, BMP *bmp){
             }
         }
     }
-    for ( x = 0 ; x < wi ; ++x )
+    for ( y = 0 ; y < he ; ++y )
     {
-        for ( y = 0 ; y < he ; ++y )
+        for ( x = 0 ; x < wi ; ++x )
         {
             BMP_GetPixelRGB( bmp, x, y, &r, &g, &b );
             //int color = rgb_to_int(r, g, b);
@@ -218,6 +215,7 @@ void Write_binary(char *output, Dictionary *d, BMP *bmp){
         }
     }
     if (counter > 0){
+        buffer = buffer << (7 - counter);
         fwrite(&buffer, sizeof(char), 1, ptr_myfile);
     }
     fclose(ptr_myfile);
