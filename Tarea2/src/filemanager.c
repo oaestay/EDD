@@ -183,9 +183,9 @@ void Write_binary(char *output, Dictionary *d, BMP *bmp){
             }
         }
     }
-    for ( y = 0 ; y < he ; ++y )
+    for ( x = 0 ; x < wi ; ++x )
     {
-        for ( x = 0 ; x < wi ; ++x )
+        for ( y = 0 ; y < he ; ++y )
         {
             BMP_GetPixelRGB( bmp, x, y, &r, &g, &b );
             //int color = rgb_to_int(r, g, b);
