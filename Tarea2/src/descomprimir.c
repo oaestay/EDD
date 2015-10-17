@@ -58,7 +58,7 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
   filesize = ftell(file); // get current file pointer
   fseek(file, 0, SEEK_SET);
   char concatenacion [(filesize-14)*8+1];
-  char codificacion[(filesize-14)*8+1];
+  char *codificacion=malloc((filesize-14)*8+1*sizeof(char));
   unsigned char bytes [14];
 
   for(i=0;i<filesize;i++)
@@ -118,9 +118,10 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
     blue[8]='\0';
     w = w +24;
     //printf("%d\n",w);
-    r = Stringuchar(red);
-    g = Stringuchar(green);
-    b = Stringuchar(blue);
+    r = (UCHAR)Stringuchar(red);
+    g = (UCHAR)Stringuchar(green);
+    b = (UCHAR)Stringuchar(blue);
+
     for (i = w;i< strlen(concatenacion1);i++)
     {
         for (v=0;v<seplength;v++)
@@ -140,7 +141,7 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
 	{
            //printf("%d\n",contador);
            contador = 0 ;
-
+           codificacion = realloc(codificacion,(i-w)*sizeof(char));
 	   for (t=w;t<i;t++)
 	   {
 
@@ -149,12 +150,11 @@ Dictionary *LeerHeader(const char *path,int *width,int *height)
 	   break;
 	}
     }
-    codificacion[t-w+1]='\0';
+    codificacion[t-w]='\0';
+
     w = v+i;
 
     printf("%s\n",codificacion);
-
-
 
 
     insert_dictionary(dict, r, g, b, 6, codificacion);
